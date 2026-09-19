@@ -702,7 +702,7 @@ class UTMCraftGame {
                     resultElem = {
                         id: randomCourse.code.toLowerCase().replace(/[^a-z0-9]/g, ''),
                         code: randomCourse.code,
-                        name: `${randomCourse.code}: ${randomCourse.name}`,
+                        name: `${randomCourse.code}: ${randomCourse.title || randomCourse.code}`,
                         emoji: '🎲',
                         category: elemA.category || 'starter',
                         department: randomCourse.department || 'UTM',
