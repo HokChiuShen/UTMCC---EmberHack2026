@@ -709,8 +709,8 @@ class UTMCraftGame {
                 // Nudge card A slightly so they don't perfectly overlap
                 cardA.x -= 20;
                 cardA.y -= 20;
-                cardA.el.style.left = \`\${cardA.x}px\`;
-                cardA.el.style.top = \`\${cardA.y}px\`;
+                cardA.el.style.left = `${cardA.x}px`;
+                cardA.el.style.top = `${cardA.y}px`;
 
                 return; // Abort the combination
             }
