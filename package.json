@@ -1,7 +1,7 @@
 {
-  "name": "utm-infinite-craft",
+  "name": "utmcc",
   "version": "1.0.0",
-  "description": "UTMCraft - UTM University of Toronto Mississauga Course Infinite Craft Game",
+  "description": "UTMCC - UTM Course Craft Game",
   "type": "module",
   "scripts": {
     "start": "python -m http.server 8080"

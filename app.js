@@ -12,6 +12,7 @@ import {
     resolveCourseYearProgression,
     generateCourseWithGemini,
     lookupUTMCourseByCode,
+    ensureAuthenticUTMCourse,
     GEMINI_MODEL
 } from './recipes.js';
 import { sounds } from './audio.js';
@@ -121,54 +122,31 @@ class UTMCraftGame {
     }
 
     loadSaveData() {
-        // Clear prior version saves so user starts fresh with only default basic elements
-        localStorage.removeItem('utmcraft_save_v1');
-        localStorage.removeItem('utmcraft_save_v2');
-        localStorage.removeItem('utmcraft_save_v3');
-        localStorage.removeItem('utmcraft_save_v4');
-
+        // Clear all prior and current saves so reopening or refreshing the website starts completely fresh
         try {
-            const raw = localStorage.getItem('utmcraft_save_v5');
-            if (raw) {
-                const data = JSON.parse(raw);
-                if (data.discovered && Array.isArray(data.discovered)) {
-                    data.discovered.forEach(item => {
-                        this.discovered.set(item.id, item);
-                    });
-                    this.discoveryOrder = data.discoveryOrder || Array.from(this.discovered.keys());
-                }
-                if (data.recipesFound) {
-                    this.recipesFound = new Map(Object.entries(data.recipesFound));
-                }
-            }
+            localStorage.removeItem('utmcraft_save_v1');
+            localStorage.removeItem('utmcraft_save_v2');
+            localStorage.removeItem('utmcraft_save_v3');
+            localStorage.removeItem('utmcraft_save_v4');
+            localStorage.removeItem('utmcraft_save_v5');
+            sessionStorage.removeItem('utmcraft_save');
         } catch (e) {
-            console.warn('Failed to parse saved game data, resetting:', e);
+            console.warn('Could not clear storage:', e);
         }
 
-        // Always ensure base default elements exist
-        BASE_ELEMENTS.forEach(elem => {
-            if (!this.discovered.has(elem.id)) {
-                this.discovered.set(elem.id, elem);
-                if (!this.discoveryOrder.includes(elem.id)) {
-                    this.discoveryOrder.push(elem.id);
-                }
-            }
-        });
+        // Always start fresh in-memory with base starter elements
+        this.discovered.clear();
+        this.discoveryOrder = [];
+        this.recipesFound.clear();
 
-        this.saveGameData();
+        BASE_ELEMENTS.forEach(elem => {
+            this.discovered.set(elem.id, elem);
+            this.discoveryOrder.push(elem.id);
+        });
     }
 
     saveGameData() {
-        try {
-            const data = {
-                discovered: Array.from(this.discovered.values()),
-                discoveryOrder: this.discoveryOrder,
-                recipesFound: Object.fromEntries(this.recipesFound)
-            };
-            localStorage.setItem('utmcraft_save_v5', JSON.stringify(data));
-        } catch (e) {
-            console.warn('Failed to save to localStorage:', e);
-        }
+        // Persistent saves disabled: game starts fresh every time the website is opened
     }
 
     renderCategoryChips() {
@@ -611,34 +589,36 @@ class UTMCraftGame {
             }
         }
 
-        // 3. Query Gemini 3.5 Flash-Lite API
+        // 3. Query Gemini or Catalog Search
         if (!resultElem) {
             try {
                 resultElem = await generateCourseWithGemini(elemA, elemB);
             } catch (err) {
-                console.warn('Gemini Flash-Lite API error, using fallback:', err);
-                // Fallback course synthesizer
-                resultElem = {
-                    id: `utm-${pairKey.replace('___', '-')}`,
-                    code: 'UTM200H5',
-                    name: `UTM200: Topics in ${elemA.name} & ${elemB.name}`,
-                    emoji: '📜',
-                    category: elemA.category || 'math',
-                    department: 'Interdisciplinary UTM Studies',
-                    desc: `An interdisciplinary UTM undergraduate course exploring the relationship between ${elemA.name} and ${elemB.name}.`
-                };
+                console.warn('Recipe resolution error:', err);
+                resultElem = null;
             }
         }
 
+        // Strict Gatekeeper: Guarantee that ANY resulting course exists as a real entry in utm_courses.json
+        if (resultElem) {
+            resultElem = ensureAuthenticUTMCourse(resultElem);
+        }
+
+        // Check if courses do NOT merge or have no connection
+        let isNoMerge = false;
+        if (!resultElem) {
+            isNoMerge = true;
+            // Spits back out one of the two courses (prioritizing the first course elemA)
+            resultElem = elemA.code ? elemA : (elemB.code ? elemB : elemA);
+        }
+
         // Enrich result with utm_courses.json full description if available
-        if (resultElem.code) {
+        if (resultElem && resultElem.code) {
             const enriched = lookupUTMCourseByCode(resultElem.code);
             if (enriched) {
-                // Use real course title if more accurate than AI title
                 if (!resultElem.name.includes(enriched.code)) {
                     resultElem = { ...resultElem };
                 }
-                // Use official description if present
                 if (enriched.description && !resultElem.isEnriched) {
                     resultElem = { ...resultElem, officialDesc: enriched.description, isEnriched: true };
                 }
@@ -648,6 +628,15 @@ class UTMCraftGame {
         // Remove the two merged cards from the canvas
         this.removeCanvasCard(cardA);
         this.removeCanvasCard(cardB);
+
+        // If no connection, spit back out the chosen course without breaking or inflating stats
+        if (isNoMerge) {
+            sounds.playPop(300);
+            fx.burst(spawnX + 60, spawnY + 22, false);
+            this.showToast(`No connection between these — returned "${resultElem.name}"`, '↩️');
+            this.createCanvasCard(resultElem, spawnX, spawnY, false);
+            return;
+        }
 
         // Notify if 4th Year Max Level merge
         if (resultElem.isMaxLevel) {
