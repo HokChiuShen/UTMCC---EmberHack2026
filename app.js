@@ -99,9 +99,10 @@ class UTMCraftGame {
         this.renderSidebar();
         this.updateStats();
         this.updateSoundButtonUI();
-        this.updateCanvasCardCount(); // Keeps canvas blank initially and updates empty-state watermark
-
-        // Canvas begins completely blank as requested - users can drag or click cards from the sidebar!
+        
+        // Spawn initial base cards onto the canvas
+        this.spawnInitialCards();
+        this.updateCanvasCardCount();
 
         // Attach Event Listeners
         this.bindEvents();
@@ -117,13 +118,13 @@ class UTMCraftGame {
             { x: -180, y: -70 }, // Math
             { x: -20,  y: -70 }, // Science
             { x: 140,  y: -70 }, // English
-            { x: -180, y: 30 },  // Logic
-            { x: -20,  y: 30 },  // Writing
-            { x: 140,  y: 30 }   // Presentation
+            { x: -180, y: 30 },  // Art
+            { x: -20,  y: 30 },  // History
+            { x: 140,  y: 30 }   // 1st Year
         ];
 
         BASE_ELEMENTS.forEach((item, index) => {
-            const pos = layout[index] || { x: 0, y: 0 };
+            const pos = layout[index] || { x: (Math.random() - 0.5)*100, y: (Math.random() - 0.5)*100 };
             this.createCanvasCard(item, centerX + pos.x, centerY + pos.y, false);
         });
     }
