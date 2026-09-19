@@ -72,11 +72,11 @@ export const BASE_ELEMENTS = [
         desc: 'The physical and natural universe: chemistry, biology, physics, and empirical observation.'
     },
     {
-        id: 'english',
-        name: 'English',
-        emoji: '📖',
-        category: 'starter',
-        desc: 'Literature, critical analysis of texts, narrative theory, and language.'
+        id: 'computerscience',
+        name: 'Computer Science',
+        emoji: '💻',
+        category: 'cs',
+        desc: 'Algorithms, data structures, software architecture, Python, and computation.'
     },
     {
         id: 'art',
@@ -86,11 +86,32 @@ export const BASE_ELEMENTS = [
         desc: 'Visual studies, studio practice, art history, aesthetics, and creative media.'
     },
     {
-        id: 'history',
-        name: 'History',
-        emoji: '🏺',
-        category: 'humanities',
-        desc: 'The study of past events, human affairs, antiquity, and historical records.'
+        id: 'english',
+        name: 'English',
+        emoji: '📖',
+        category: 'starter',
+        desc: 'Literature, critical analysis of texts, narrative theory, and language.'
+    },
+    {
+        id: 'logic',
+        name: 'Logic',
+        emoji: '🧠',
+        category: 'starter',
+        desc: 'Deductive reasoning, formal proof structures, symbolic operators, and truth analysis.'
+    },
+    {
+        id: 'writing',
+        name: 'Writing',
+        emoji: '✍️',
+        category: 'starter',
+        desc: 'Academic clarity, essay construction, research citations, and persuasive prose.'
+    },
+    {
+        id: 'presentation',
+        name: 'Presentation',
+        emoji: '🎤',
+        category: 'starter',
+        desc: 'Rhetoric, oral delivery, slide synthesis, public communication, and debate.'
     },
     YEAR_ELEMENTS.year1
 ];

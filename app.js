@@ -99,7 +99,6 @@ class UTMCraftGame {
         this.renderSidebar();
         this.updateStats();
         this.updateSoundButtonUI();
-        
         // Spawn initial base cards onto the canvas
         this.spawnInitialCards();
         this.updateCanvasCardCount();
@@ -113,18 +112,21 @@ class UTMCraftGame {
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
-        // 2 rows of 3
+        // 3 rows of 3
         const layout = [
-            { x: -180, y: -70 }, // Math
-            { x: -20,  y: -70 }, // Science
-            { x: 140,  y: -70 }, // English
-            { x: -180, y: 30 },  // Art
-            { x: -20,  y: 30 },  // History
-            { x: 140,  y: 30 }   // 1st Year
+            { x: -180, y: -120 },
+            { x: -20,  y: -120 },
+            { x: 140,  y: -120 },
+            { x: -180, y: 0 },
+            { x: -20,  y: 0 },
+            { x: 140,  y: 0 },
+            { x: -180, y: 120 },
+            { x: -20,  y: 120 },
+            { x: 140,  y: 120 }
         ];
 
         BASE_ELEMENTS.forEach((item, index) => {
-            const pos = layout[index] || { x: (Math.random() - 0.5)*100, y: (Math.random() - 0.5)*100 };
+            const pos = layout[index] || { x: 0, y: 0 };
             this.createCanvasCard(item, centerX + pos.x, centerY + pos.y, false);
         });
     }
