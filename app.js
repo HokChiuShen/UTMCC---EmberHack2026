@@ -695,16 +695,30 @@ class UTMCraftGame {
                 resultElem = await generateCourseWithGemini(elemA, elemB);
             } catch (err) {
                 console.warn('Gemini Flash-Lite API error, using fallback:', err);
-                // Fallback course synthesizer so the combination still succeeds
-                resultElem = {
-                    id: `utm-${pairKey.replace('___', '-')}`,
-                    code: 'UTM200H5',
-                    name: `Topics in ${elemA.name} & ${elemB.name}`,
-                    emoji: '📜',
-                    category: elemA.category || 'math',
-                    department: 'Interdisciplinary UTM Studies',
-                    desc: `A synthesized interdisciplinary UTM course exploring the relationship between ${elemA.name} and ${elemB.name}.`
-                };
+                const db = window.UTM_COURSES_DB || [];
+                if (db.length > 0) {
+                    // Find a random real course from the JSON database
+                    const randomCourse = db[Math.floor(Math.random() * db.length)];
+                    resultElem = {
+                        id: randomCourse.code.toLowerCase().replace(/[^a-z0-9]/g, ''),
+                        code: randomCourse.code,
+                        name: `${randomCourse.code}: ${randomCourse.name}`,
+                        emoji: '🎲',
+                        category: elemA.category || 'starter',
+                        department: randomCourse.department || 'UTM',
+                        desc: randomCourse.description || 'A real UTM course selected as a fallback.'
+                    };
+                } else {
+                    // Extreme fallback if DB hasn't loaded
+                    resultElem = {
+                        id: 'err100',
+                        code: 'ERR100',
+                        name: 'ERR100: Error Placeholder',
+                        emoji: '⚠️',
+                        category: 'starter',
+                        desc: 'The UTM course database was not loaded.'
+                    };
+                }
             }
         }
 
