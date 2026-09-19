@@ -694,25 +694,17 @@ class UTMCraftGame {
             try {
                 resultElem = await generateCourseWithGemini(elemA, elemB);
             } catch (err) {
-                console.warn('Gemini Flash-Lite API error, aborting craft:', err);
-                this.showToast('Could not combine those elements! (API Error)', '⚠️');
-                sounds.playTrash();
-
-                // Restore card B's visuals
-                cardB.el.innerHTML = `
-                    <span class="card-emoji">${elemB.emoji}</span>
-                    <span class="card-name">${elemB.name}</span>
-                    ${elemB.code ? `<span class="card-code">${elemB.code}</span>` : ''}
-                `;
-                cardB.el.classList.remove('craft-candidate');
-
-                // Nudge card A slightly so they don't perfectly overlap
-                cardA.x -= 20;
-                cardA.y -= 20;
-                cardA.el.style.left = `${cardA.x}px`;
-                cardA.el.style.top = `${cardA.y}px`;
-
-                return; // Abort the combination
+                console.warn('Gemini Flash-Lite API error, using fallback:', err);
+                // Fallback course synthesizer so the combination still succeeds
+                resultElem = {
+                    id: `utm-${pairKey.replace('___', '-')}`,
+                    code: 'UTM200H5',
+                    name: `Topics in ${elemA.name} & ${elemB.name}`,
+                    emoji: '📜',
+                    category: elemA.category || 'math',
+                    department: 'Interdisciplinary UTM Studies',
+                    desc: `A synthesized interdisciplinary UTM course exploring the relationship between ${elemA.name} and ${elemB.name}.`
+                };
             }
         }
 
