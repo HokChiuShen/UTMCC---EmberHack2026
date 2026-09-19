@@ -181,7 +181,13 @@ class UTMCraftGame {
 
         // Apply Category Filter
         if (this.activeFilter !== 'all') {
-            items = items.filter(i => i.category === this.activeFilter);
+            items = items.filter(i => {
+                if (i.category === this.activeFilter) return true;
+                if (this.activeFilter === 'starter') return i.category === 'starter' || ['math', 'science', 'computerscience', 'art', 'english', 'logic', 'writing', 'presentation'].includes(i.id);
+                if (this.activeFilter === 'art') return i.id === 'art';
+                if (this.activeFilter === 'cs') return i.id === 'computerscience';
+                return false;
+            });
         }
 
         // Apply Sorting

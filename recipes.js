@@ -75,14 +75,14 @@ export const BASE_ELEMENTS = [
         id: 'computerscience',
         name: 'Computer Science',
         emoji: '💻',
-        category: 'cs',
+        category: 'starter',
         desc: 'Algorithms, data structures, software architecture, Python, and computation.'
     },
     {
         id: 'art',
         name: 'Art',
         emoji: '🎨',
-        category: 'art',
+        category: 'starter',
         desc: 'Visual studies, studio practice, art history, aesthetics, and creative media.'
     },
     {
