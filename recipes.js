@@ -549,8 +549,8 @@ const FAST_OFFLINE_RECIPES = [
         desc: 'Writing and presentation rhetoric essential for university scholarly discourse.'
     }],
     [['presentation', 'logic'], {
-        code: 'PHL247H5',
-        name: 'PHL247: Critical Reasoning',
+        code: 'PHL245H5',
+        name: 'PHL245H5: Critical Reasoning',
         emoji: '⚖️',
         category: 'humanities',
         department: 'Philosophy',
@@ -643,19 +643,19 @@ export const UTM_YEAR_COURSES = {
 
     // Astronomy
     'ast101': {
-        2: { code: 'AST202H5', name: 'AST202: Exploration of the Solar System', emoji: '🪐', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Planetary astronomy examining the origin, composition, atmospheres, and exploration of solar worlds.' },
-        3: { code: 'AST301H5', name: 'AST301: Observational Astronomy', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Telescopic observation, astronomical CCD imaging, and stellar spectral classification.' },
-        4: { code: 'AST401H5', name: 'AST401: Topics in Modern Astrophysics', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior UTM research capstone covering high-energy astrophysics and cosmic expansion.' }
+        2: { code: 'AST201H5', name: 'AST201H5: Exploration of the Solar System', emoji: '🪐', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Planetary astronomy examining the origin, composition, atmospheres, and exploration of solar worlds.' },
+        3: { code: 'AST320H5', name: 'AST320H5: Observational Astronomy', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Telescopic observation, astronomical CCD imaging, and stellar spectral classification.' },
+        4: { code: 'AST325H5', name: 'AST325H5: Topics in Modern Astrophysics', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior UTM research capstone covering high-energy astrophysics and cosmic expansion.' }
     },
     'ast101h5': {
-        2: { code: 'AST202H5', name: 'AST202: Exploration of the Solar System', emoji: '🪐', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Planetary astronomy examining the origin, composition, atmospheres, and exploration of solar worlds.' },
-        3: { code: 'AST301H5', name: 'AST301: Observational Astronomy', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Telescopic observation, astronomical CCD imaging, and stellar spectral classification.' },
-        4: { code: 'AST401H5', name: 'AST401: Topics in Modern Astrophysics', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior UTM research capstone covering high-energy astrophysics and cosmic expansion.' }
+        2: { code: 'AST201H5', name: 'AST201H5: Exploration of the Solar System', emoji: '🪐', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Planetary astronomy examining the origin, composition, atmospheres, and exploration of solar worlds.' },
+        3: { code: 'AST320H5', name: 'AST320H5: Observational Astronomy', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Telescopic observation, astronomical CCD imaging, and stellar spectral classification.' },
+        4: { code: 'AST325H5', name: 'AST325H5: Topics in Modern Astrophysics', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior UTM research capstone covering high-energy astrophysics and cosmic expansion.' }
     },
-    'ast202': {
+    'ast201h5': {
         1: { code: 'AST101H5', name: 'AST101: Exploring the Universe', emoji: '✨', category: 'science', department: 'Chemical and Physical Sciences', desc: 'The 1st-year introduction to galaxies, stars, and cosmological wonders.' },
-        3: { code: 'AST301H5', name: 'AST301: Observational Astronomy', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Telescopic observation, astronomical CCD imaging, and stellar spectral classification.' },
-        4: { code: 'AST401H5', name: 'AST401: Topics in Modern Astrophysics', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior UTM research capstone covering high-energy astrophysics and cosmic expansion.' }
+        3: { code: 'AST320H5', name: 'AST320H5: Observational Astronomy', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Telescopic observation, astronomical CCD imaging, and stellar spectral classification.' },
+        4: { code: 'AST325H5', name: 'AST325H5: Topics in Modern Astrophysics', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior UTM research capstone covering high-energy astrophysics and cosmic expansion.' }
     },
 
     // Computer Science
@@ -672,12 +672,12 @@ export const UTM_YEAR_COURSES = {
     'csc148': {
         2: { code: 'CSC236H5', name: 'CSC236: Intro to Theory of Computation', emoji: '🧠', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Structural induction, algorithm correctness proofs, and regular languages.' },
         3: { code: 'CSC373H5', name: 'CSC373: Algorithm Design and Analysis', emoji: '⚡', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Dynamic programming, greedy algorithms, network flow, and complexity classes.' },
-        4: { code: 'CSC411H5', name: 'CSC411: Machine Learning & Data Mining', emoji: '🤖', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Neural architectures, statistical inference, regression, and optimization algorithms.' }
+        4: { code: 'CSC413H5', name: 'CSC413H5: Machine Learning & Data Mining', emoji: '🤖', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Neural architectures, statistical inference, regression, and optimization algorithms.' }
     },
     'csc148h5': {
         2: { code: 'CSC236H5', name: 'CSC236: Intro to Theory of Computation', emoji: '🧠', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Structural induction, algorithm correctness proofs, and regular languages.' },
         3: { code: 'CSC373H5', name: 'CSC373: Algorithm Design and Analysis', emoji: '⚡', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Dynamic programming, greedy algorithms, network flow, and complexity classes.' },
-        4: { code: 'CSC411H5', name: 'CSC411: Machine Learning & Data Mining', emoji: '🤖', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Neural architectures, statistical inference, regression, and optimization algorithms.' }
+        4: { code: 'CSC413H5', name: 'CSC413H5: Machine Learning & Data Mining', emoji: '🤖', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Neural architectures, statistical inference, regression, and optimization algorithms.' }
     },
 
     // Computer Science Base & Aliases
@@ -699,17 +699,17 @@ export const UTM_YEAR_COURSES = {
         1: { code: 'FAH101H5', name: 'FAH101: Introduction to Art History', emoji: '🏛️', category: 'art', department: 'Visual Studies', desc: 'Critical visual analysis of monuments, paintings, and historical culture.' },
         2: { code: 'FAS247H5', name: 'FAS247: Studio Painting I', emoji: '🖌️', category: 'art', department: 'Visual Studies', desc: 'Studio painting practice: color theory, surface dynamics, and visual expression.' },
         3: { code: 'FAH310H5', name: 'FAH310: Curatorial Practice & Museum Studies', emoji: '🖼️', category: 'art', department: 'Visual Studies', desc: 'Exhibition curation, archiving, and museum politics.' },
-        4: { code: 'FAS450H5', name: 'FAS450: Senior Studio Project Capstone', emoji: '🌟', category: 'art', department: 'Visual Studies', desc: 'Senior graduating studio exhibition and artist portfolio.' }
+        4: { code: 'FAS450Y5', name: 'FAS450Y5: Senior Studio Project Capstone', emoji: '🌟', category: 'art', department: 'Visual Studies', desc: 'Senior graduating studio exhibition and artist portfolio.' }
     },
     'fah101': {
         2: { code: 'FAH289H5', name: 'FAH289: Art and the Environment', emoji: '🌿', category: 'art', department: 'Visual Studies', desc: 'Ecological aesthetics and site-specific landscape installations.' },
         3: { code: 'FAH310H5', name: 'FAH310: Curatorial Practice & Museum Studies', emoji: '🖼️', category: 'art', department: 'Visual Studies', desc: 'Exhibition curation, archiving, and museum politics.' },
-        4: { code: 'FAH401H5', name: 'FAH401: Advanced Studies in Art History', emoji: '📜', category: 'art', department: 'Visual Studies', desc: 'Senior seminar in archival art historical methodologies.' }
+        4: { code: 'FAH480H5', name: 'FAH480H5: Advanced Studies in Art History', emoji: '📜', category: 'art', department: 'Visual Studies', desc: 'Senior seminar in archival art historical methodologies.' }
     },
     'fah101h5': {
         2: { code: 'FAH289H5', name: 'FAH289: Art and the Environment', emoji: '🌿', category: 'art', department: 'Visual Studies', desc: 'Ecological aesthetics and site-specific landscape installations.' },
         3: { code: 'FAH310H5', name: 'FAH310: Curatorial Practice & Museum Studies', emoji: '🖼️', category: 'art', department: 'Visual Studies', desc: 'Exhibition curation, archiving, and museum politics.' },
-        4: { code: 'FAH401H5', name: 'FAH401: Advanced Studies in Art History', emoji: '📜', category: 'art', department: 'Visual Studies', desc: 'Senior seminar in archival art historical methodologies.' }
+        4: { code: 'FAH480H5', name: 'FAH480H5: Advanced Studies in Art History', emoji: '📜', category: 'art', department: 'Visual Studies', desc: 'Senior seminar in archival art historical methodologies.' }
     },
 
     // Concept Keywords Year Levels
@@ -717,43 +717,43 @@ export const UTM_YEAR_COURSES = {
         1: { code: 'BIO152H5', name: 'BIO152: Introduction to Evolution', emoji: '🧬', category: 'science', department: 'Biology', desc: 'Evolutionary mechanisms and biological diversity.' },
         2: { code: 'BIO202H5', name: 'BIO202: Introductory Molecular Biology', emoji: '🔬', category: 'science', department: 'Biology', desc: 'DNA replication, transcription, and translation.' },
         3: { code: 'BIO310H5', name: 'BIO310: Physiology of Microorganisms', emoji: '🧫', category: 'science', department: 'Biology', desc: 'Microbial energetics and metabolic paths.' },
-        4: { code: 'BIO400H5', name: 'BIO400: Capstone in Molecular Biology', emoji: '🧪', category: 'science', department: 'Biology', desc: 'Senior laboratory investigation.' }
+        4: { code: 'BIO400Y5', name: 'BIO400Y5: Capstone in Molecular Biology', emoji: '🧪', category: 'science', department: 'Biology', desc: 'Senior laboratory investigation.' }
     },
     'physics': {
         1: { code: 'PHY136H5', name: 'PHY136: Intro to Physics I', emoji: '⚡', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Mechanics, kinematics, and Newtonian dynamics.' },
         2: { code: 'PHY241H5', name: 'PHY241: Classical Mechanics', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Lagrangian mechanics and central force motions.' },
-        3: { code: 'PHY354H5', name: 'PHY354: Quantum Mechanics', emoji: '⚛️', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Wave functions, operators, and Schrödinger equation.' },
-        4: { code: 'PHY490H5', name: 'PHY490: Physics Capstone Thesis', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior physics laboratory research project.' }
+        3: { code: 'PHY325H5', name: 'PHY325H5: Quantum Mechanics', emoji: '⚛️', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Wave functions, operators, and Schrödinger equation.' },
+        4: { code: 'PHY426H5', name: 'PHY426H5: Physics Capstone Thesis', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior physics laboratory research project.' }
     },
     'chemistry': {
         1: { code: 'CHM110H5', name: 'CHM110: Chemical Principles I', emoji: '🧪', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Chemical kinetics, equilibria, and stoichiometry.' },
         2: { code: 'CHM242H5', name: 'CHM242: Organic Chemistry I', emoji: '⚗️', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Reaction mechanisms, synthesis, and functional groups.' },
         3: { code: 'CHM341H5', name: 'CHM341: Advanced Organic Chemistry', emoji: '🔬', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Stereochemistry and catalytic reactions.' },
-        4: { code: 'CHM489H5', name: 'CHM489: Chemistry Research Project', emoji: '🧪', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Independent fourth-year chemistry thesis.' }
+        4: { code: 'CHM489Y5', name: 'CHM489Y5: Chemistry Research Project', emoji: '🧪', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Independent fourth-year chemistry thesis.' }
     },
     'psychology': {
-        1: { code: 'PSY100H5', name: 'PSY100: Intro to Psychology', emoji: '🧠', category: 'science', department: 'Psychology', desc: 'Perception, cognition, and behavioral sciences.' },
+        1: { code: 'PSY100Y5', name: 'PSY100Y5: Intro to Psychology', emoji: '🧠', category: 'science', department: 'Psychology', desc: 'Perception, cognition, and behavioral sciences.' },
         2: { code: 'PSY201H5', name: 'PSY201: Research Design & Analysis', emoji: '📊', category: 'science', department: 'Psychology', desc: 'Psychological statistics and experimental testing.' },
         3: { code: 'PSY310H5', name: 'PSY310: Cognitive Neuroscience', emoji: '🔬', category: 'science', department: 'Psychology', desc: 'Brain structures, memory networks, and neuro-imaging.' },
-        4: { code: 'PSY400H5', name: 'PSY400: Senior Thesis in Psychology', emoji: '🧬', category: 'science', department: 'Psychology', desc: 'Independent empirical psychological thesis.' }
+        4: { code: 'PSY400Y5', name: 'PSY400Y5: Senior Thesis in Psychology', emoji: '🧬', category: 'science', department: 'Psychology', desc: 'Independent empirical psychological thesis.' }
     },
     'philosophy': {
         1: { code: 'PHL103H5', name: 'PHL103: Intro to Philosophy', emoji: '🏛️', category: 'humanities', department: 'Philosophy', desc: 'Classical epistemology and ethics.' },
         2: { code: 'PHL245H5', name: 'PHL245: Modern Symbolic Logic', emoji: '🧠', category: 'humanities', department: 'Philosophy', desc: 'Propositional and symbolic logic.' },
         3: { code: 'PHL345H5', name: 'PHL345: Advanced Symbolic Logic', emoji: '⚖️', category: 'humanities', department: 'Philosophy', desc: 'Metatheoretic soundness and completeness.' },
-        4: { code: 'PHL401H5', name: 'PHL401: Advanced Seminar in Philosophy', emoji: '📜', category: 'humanities', department: 'Philosophy', desc: 'Senior philosophical investigation.' }
+        4: { code: 'PHL400H5', name: 'PHL400H5: Advanced Seminar in Philosophy', emoji: '📜', category: 'humanities', department: 'Philosophy', desc: 'Senior philosophical investigation.' }
     },
     'economics': {
-        1: { code: 'ECO100H5', name: 'ECO100: Intro to Economics', emoji: '💰', category: 'social', department: 'Economics', desc: 'Supply, demand, macro-stability, and market mechanisms.' },
-        2: { code: 'ECO200H5', name: 'ECO200: Microeconomic Theory', emoji: '📊', category: 'social', department: 'Economics', desc: 'Consumer utility, firm production, and competitive equilibrium.' },
-        3: { code: 'ECO300H5', name: 'ECO300: International Trade', emoji: '🌐', category: 'social', department: 'Economics', desc: 'Global commerce, exchange rates, and tariffs.' },
-        4: { code: 'ECO400H5', name: 'ECO400: Advanced Microeconomics', emoji: '📈', category: 'social', department: 'Economics', desc: 'Game theory, mechanism design, and information economics.' }
+        1: { code: 'ECO101H5', name: 'ECO101H5: Intro to Economics', emoji: '💰', category: 'social', department: 'Economics', desc: 'Supply, demand, macro-stability, and market mechanisms.' },
+        2: { code: 'ECO200Y5', name: 'ECO200Y5: Microeconomic Theory', emoji: '📊', category: 'social', department: 'Economics', desc: 'Consumer utility, firm production, and competitive equilibrium.' },
+        3: { code: 'ECO310H5', name: 'ECO310H5: International Trade', emoji: '🌐', category: 'social', department: 'Economics', desc: 'Global commerce, exchange rates, and tariffs.' },
+        4: { code: 'ECO400Y5', name: 'ECO400Y5: Advanced Microeconomics', emoji: '📈', category: 'social', department: 'Economics', desc: 'Game theory, mechanism design, and information economics.' }
     },
     'management': {
         1: { code: 'MGM101H5', name: 'MGM101: Principles of Management', emoji: '💼', category: 'social', department: 'Management', desc: 'Core fundamentals of organizational management.' },
         2: { code: 'MGT220H5', name: 'MGT220: Financial Accounting', emoji: '📊', category: 'social', department: 'Management', desc: 'Financial balance sheets, cash flows, and valuation.' },
         3: { code: 'MGT330H5', name: 'MGT330: Corporate Finance', emoji: '📈', category: 'social', department: 'Management', desc: 'Capital budgeting, corporate valuation, and investment analysis.' },
-        4: { code: 'MGT490H5', name: 'MGT490: Strategic Management Capstone', emoji: '🏆', category: 'social', department: 'Management', desc: 'Senior capstone in corporate strategy and competitive advantage.' }
+        4: { code: 'MGT420H5', name: 'MGT420H5: Strategic Management Capstone', emoji: '🏆', category: 'social', department: 'Management', desc: 'Senior capstone in corporate strategy and competitive advantage.' }
     },
     'media': {
         1: { code: 'CCT110H5', name: 'CCT110: Rhetoric and Media', emoji: '🎤', category: 'presentation', department: 'Institute of Communication, Culture, Information & Technology', desc: 'Public speech and digital media rhetoric.' },
@@ -765,7 +765,7 @@ export const UTM_YEAR_COURSES = {
         1: { code: 'FAS143H5', name: 'FAS143: Foundations in Studio Practice', emoji: '🖌️', category: 'art', department: 'Visual Studies', desc: 'Foundations of drawing, visual composition, and studio critique.' },
         2: { code: 'CCT211H5', name: 'CCT211: Interactive Media Design', emoji: '🎨', category: 'art', department: 'Institute of Communication, Culture, Information & Technology', desc: 'UI/UX design, visual hierarchy, and prototyping.' },
         3: { code: 'FAH310H5', name: 'FAH310: Curatorial Practice & Museum Studies', emoji: '🖼️', category: 'art', department: 'Visual Studies', desc: 'Exhibition curation and museum installation design.' },
-        4: { code: 'FAS450H5', name: 'FAS450: Senior Studio Project Capstone', emoji: '🌟', category: 'art', department: 'Visual Studies', desc: 'Graduating capstone showcase and exhibition.' }
+        4: { code: 'FAS450Y5', name: 'FAS450Y5: Senior Studio Project Capstone', emoji: '🌟', category: 'art', department: 'Visual Studies', desc: 'Graduating capstone showcase and exhibition.' }
     },
 
     // Statistics
@@ -778,11 +778,11 @@ export const UTM_YEAR_COURSES = {
     // English & Writing
     'eng100': {
         2: { code: 'ENG202H5', name: 'ENG202: British Literature Survey', emoji: '📖', category: 'english', department: 'English and Drama', desc: 'Chronological exploration of canonical British texts from medieval to Victorian.' },
-        3: { code: 'ENG307H5', name: 'ENG307: Shakespeare', emoji: '🎭', category: 'english', department: 'English and Drama', desc: 'In-depth textual criticism and staging considerations of major Shakespearean plays.' },
-        4: { code: 'ENG401H5', name: 'ENG401: Advanced Studies in English', emoji: '📜', category: 'english', department: 'English and Drama', desc: 'Senior undergraduate seminar in advanced literary critique and research.' }
+        3: { code: 'ENG308Y5', name: 'ENG308Y5: Shakespeare', emoji: '🎭', category: 'english', department: 'English and Drama', desc: 'In-depth textual criticism and staging considerations of major Shakespearean plays.' },
+        4: { code: 'ENG400H5', name: 'ENG400H5: Advanced Studies in English', emoji: '📜', category: 'english', department: 'English and Drama', desc: 'Senior undergraduate seminar in advanced literary critique and research.' }
     },
     'isp100': {
-        2: { code: 'WRI203H5', name: 'WRI203: Expressive Writing', emoji: '✍️', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Developing rhetorical craft, creative non-fiction essays, and reflective prose.' },
+        2: { code: 'WRI273H5', name: 'WRI273H5: Expressive Writing', emoji: '✍️', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Developing rhetorical craft, creative non-fiction essays, and reflective prose.' },
         3: { code: 'WRI360H5', name: 'WRI360: Technical Writing', emoji: '📋', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Communicating complex scientific, technical, and engineering data clearly.' },
         4: { code: 'WRI410H5', name: 'WRI410: Senior Seminar in Writing', emoji: '🖋️', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Senior portfolio development and manuscript editing for professional publication.' }
     },
@@ -791,25 +791,25 @@ export const UTM_YEAR_COURSES = {
     'sci100': {
         2: { code: 'BIO202H5', name: 'BIO202: Introductory Molecular Biology', emoji: '🧬', category: 'science', department: 'Biology', desc: 'Replication, gene transcription, RNA regulation, and protein translation.' },
         3: { code: 'BIO310H5', name: 'BIO310: Physiology of Microorganisms', emoji: '🧫', category: 'science', department: 'Biology', desc: 'Microbial bioenergetics, cellular transport, and metabolic control.' },
-        4: { code: 'BIO400H5', name: 'BIO400: Capstone in Molecular Biology', emoji: '🔬', category: 'science', department: 'Biology', desc: 'Senior experimental laboratory project in contemporary molecular biology.' }
+        4: { code: 'BIO400Y5', name: 'BIO400Y5: Capstone in Molecular Biology', emoji: '🔬', category: 'science', department: 'Biology', desc: 'Senior experimental laboratory project in contemporary molecular biology.' }
     },
     'bio152': {
         2: { code: 'BIO206H5', name: 'BIO206: Introductory Cell Biology', emoji: '🔬', category: 'science', department: 'Biology', desc: 'Eukaryotic organelle dynamics, membrane trafficking, and signal transduction.' },
         3: { code: 'BIO360H5', name: 'BIO360: Biometrics', emoji: '📊', category: 'science', department: 'Biology', desc: 'Experimental statistical design, sampling protocols, and biological hypothesis testing.' },
-        4: { code: 'BIO481H5', name: 'BIO481: Biology Research Thesis', emoji: '🧬', category: 'science', department: 'Biology', desc: 'Year-long faculty-supervised empirical research thesis in UTM biology labs.' }
+        4: { code: 'BIO481Y5', name: 'BIO481Y5: Biology Research Thesis', emoji: '🧬', category: 'science', department: 'Biology', desc: 'Year-long faculty-supervised empirical research thesis in UTM biology labs.' }
     },
 
     // Philosophy & Logic
-    'phl247': {
+    'phl245h5': {
         1: { code: 'PHL103H5', name: 'PHL103: Intro to Philosophy', emoji: '🏛️', category: 'humanities', department: 'Philosophy', desc: 'Core philosophical questions in epistemology, ethics, and political thought.' },
         2: { code: 'PHL245H5', name: 'PHL245: Modern Symbolic Logic', emoji: '🧠', category: 'humanities', department: 'Philosophy', desc: 'Natural deduction, quantifier logic, truth trees, and formal semantics.' },
         3: { code: 'PHL345H5', name: 'PHL345: Advanced Symbolic Logic', emoji: '⚖️', category: 'humanities', department: 'Philosophy', desc: 'Metatheory, soundness, completeness proofs, and formal model theory.' },
-        4: { code: 'PHL401H5', name: 'PHL401: Advanced Seminar in Philosophy', emoji: '📜', category: 'humanities', department: 'Philosophy', desc: 'Intensive research seminar in contemporary analytic and continental thought.' }
+        4: { code: 'PHL400H5', name: 'PHL400H5: Advanced Seminar in Philosophy', emoji: '📜', category: 'humanities', department: 'Philosophy', desc: 'Intensive research seminar in contemporary analytic and continental thought.' }
     },
     'phl245': {
         1: { code: 'PHL103H5', name: 'PHL103: Intro to Philosophy', emoji: '🏛️', category: 'humanities', department: 'Philosophy', desc: 'Core philosophical questions in epistemology, ethics, and political thought.' },
         3: { code: 'PHL345H5', name: 'PHL345: Advanced Symbolic Logic', emoji: '⚖️', category: 'humanities', department: 'Philosophy', desc: 'Metatheory, soundness, completeness proofs, and formal model theory.' },
-        4: { code: 'PHL401H5', name: 'PHL401: Advanced Seminar in Philosophy', emoji: '📜', category: 'humanities', department: 'Philosophy', desc: 'Intensive research seminar in contemporary analytic and continental thought.' }
+        4: { code: 'PHL400H5', name: 'PHL400H5: Advanced Seminar in Philosophy', emoji: '📜', category: 'humanities', department: 'Philosophy', desc: 'Intensive research seminar in contemporary analytic and continental thought.' }
     },
 
     // Base Starter Disciplines + Year Levels
@@ -821,25 +821,25 @@ export const UTM_YEAR_COURSES = {
     },
     'science': {
         1: { code: 'AST101H5', name: 'AST101: Exploring the Universe', emoji: '✨', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Cosmic inquiry and empirical observation of celestial bodies.' },
-        2: { code: 'AST202H5', name: 'AST202: Exploration of the Solar System', emoji: '🪐', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Planetary structures, atmospheres, and space exploration.' },
+        2: { code: 'AST201H5', name: 'AST201H5: Exploration of the Solar System', emoji: '🪐', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Planetary structures, atmospheres, and space exploration.' },
         3: { code: 'CHM361H5', name: 'CHM361: Biochemistry I', emoji: '🧪', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Protein structures, enzyme kinetics, and metabolic pathways.' },
-        4: { code: 'BIO400H5', name: 'BIO400: Capstone in Molecular Biology', emoji: '🧫', category: 'science', department: 'Biology', desc: 'Advanced laboratory research and bio-analysis.' }
+        4: { code: 'BIO400Y5', name: 'BIO400Y5: Capstone in Molecular Biology', emoji: '🧫', category: 'science', department: 'Biology', desc: 'Advanced laboratory research and bio-analysis.' }
     },
     'english': {
         1: { code: 'ENG100H5', name: 'ENG100: Effective Writing', emoji: '📖', category: 'english', department: 'English and Drama', desc: 'University textual rhetoric and essay analysis.' },
         2: { code: 'ENG202H5', name: 'ENG202: British Literature Survey', emoji: '📚', category: 'english', department: 'English and Drama', desc: 'Survey of canonical British literature across eras.' },
-        3: { code: 'ENG307H5', name: 'ENG307: Shakespeare', emoji: '🎭', category: 'english', department: 'English and Drama', desc: 'Advanced textual criticism of Shakespeare.' },
-        4: { code: 'ENG401H5', name: 'ENG401: Advanced Studies in English', emoji: '📜', category: 'english', department: 'English and Drama', desc: 'Senior literary critique seminar.' }
+        3: { code: 'ENG308Y5', name: 'ENG308Y5: Shakespeare', emoji: '🎭', category: 'english', department: 'English and Drama', desc: 'Advanced textual criticism of Shakespeare.' },
+        4: { code: 'ENG400H5', name: 'ENG400H5: Advanced Studies in English', emoji: '📜', category: 'english', department: 'English and Drama', desc: 'Senior literary critique seminar.' }
     },
     'logic': {
-        1: { code: 'PHL247H5', name: 'PHL247: Critical Reasoning', emoji: '🧠', category: 'humanities', department: 'Philosophy', desc: 'Argument analysis and rhetorical fallacy detection.' },
+        1: { code: 'PHL245H5', name: 'PHL245H5: Critical Reasoning', emoji: '🧠', category: 'humanities', department: 'Philosophy', desc: 'Argument analysis and rhetorical fallacy detection.' },
         2: { code: 'PHL245H5', name: 'PHL245: Modern Symbolic Logic', emoji: '⚖️', category: 'humanities', department: 'Philosophy', desc: 'Propositional and predicate logic calculus.' },
         3: { code: 'PHL345H5', name: 'PHL345: Advanced Symbolic Logic', emoji: '🏛️', category: 'humanities', department: 'Philosophy', desc: 'Soundness, completeness, and logical metatheory.' },
-        4: { code: 'CSC411H5', name: 'CSC411: Machine Learning & Data Mining', emoji: '🤖', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Computational logic applied to algorithmic inference.' }
+        4: { code: 'CSC413H5', name: 'CSC413H5: Machine Learning & Data Mining', emoji: '🤖', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Computational logic applied to algorithmic inference.' }
     },
     'writing': {
         1: { code: 'ISP100H5', name: 'ISP100: Writing for University', emoji: '✍️', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Foundational scholarly communication.' },
-        2: { code: 'WRI203H5', name: 'WRI203: Expressive Writing', emoji: '📝', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Voice, style, and creative non-fiction.' },
+        2: { code: 'WRI273H5', name: 'WRI273H5: Expressive Writing', emoji: '📝', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Voice, style, and creative non-fiction.' },
         3: { code: 'WRI360H5', name: 'WRI360: Technical Writing', emoji: '📋', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Clear documentation for technical systems.' },
         4: { code: 'WRI410H5', name: 'WRI410: Senior Seminar in Writing', emoji: '🖋️', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Professional manuscript development and publication.' }
     },
@@ -854,7 +854,7 @@ export const UTM_YEAR_COURSES = {
         1: { code: 'CSC148H5', name: 'CSC148: Introduction to Computer Science', emoji: '🌳', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Foundational data structures and algorithm design.' },
         2: { code: 'CSC263H5', name: 'CSC263: Data Structures and Analysis', emoji: '📊', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Priority queues, amortized analysis, and hashing.' },
         3: { code: 'CSC373H5', name: 'CSC373: Algorithm Design and Analysis', emoji: '⚡', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Greedy, DP, and NP-completeness.' },
-        4: { code: 'CSC411H5', name: 'CSC411: Machine Learning & Data Mining', emoji: '🤖', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Statistical learning theory and neural inference.' }
+        4: { code: 'CSC413H5', name: 'CSC413H5: Machine Learning & Data Mining', emoji: '🤖', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Statistical learning theory and neural inference.' }
     },
     'theory': {
         1: { code: 'MAT102H5', name: 'MAT102: Mathematical Proofs', emoji: '🧩', category: 'math', department: 'Mathematical and Computational Sciences', desc: 'The proof foundation for theoretical CS.' },
@@ -883,7 +883,7 @@ export const UTM_YEAR_COURSES = {
     'softwareengineering': {
         1: { code: 'CSC207H5', name: 'CSC207: Software Design', emoji: '💻', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Java design patterns and clean software architecture.' },
         2: { code: 'CSC301H5', name: 'CSC301: Introduction to Software Engineering', emoji: '🏗️', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Agile methodology, requirements, and testing.' },
-        3: { code: 'CSC302H5', name: 'CSC302: Engineering Large Systems', emoji: '🏛️', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Architectural design of enterprise software.' },
+        3: { code: 'CSC301H5', name: 'CSC301H5: Engineering Large Systems', emoji: '🏛️', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Architectural design of enterprise software.' },
         4: { code: 'CSC490H5', name: 'CSC490: Capstone Design Course', emoji: '🎓', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Senior capstone team project and product deployment.' }
     }
 };
@@ -898,9 +898,9 @@ export const DEPARTMENT_YEAR_FALLBACKS = {
     },
     ast: {
         1: { code: 'AST101H5', name: 'AST101: Exploring the Universe', emoji: '✨', category: 'science', department: 'Chemical and Physical Sciences', desc: '1st-year cosmic exploration.' },
-        2: { code: 'AST202H5', name: 'AST202: Exploration of the Solar System', emoji: '🪐', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Solar system exploration and planetary science.' },
-        3: { code: 'AST301H5', name: 'AST301: Observational Astronomy', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Telescopic observation and spectral analysis.' },
-        4: { code: 'AST401H5', name: 'AST401: Topics in Modern Astrophysics', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Advanced astrophysics research seminar.' }
+        2: { code: 'AST201H5', name: 'AST201H5: Exploration of the Solar System', emoji: '🪐', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Solar system exploration and planetary science.' },
+        3: { code: 'AST320H5', name: 'AST320H5: Observational Astronomy', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Telescopic observation and spectral analysis.' },
+        4: { code: 'AST325H5', name: 'AST325H5: Topics in Modern Astrophysics', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Advanced astrophysics research seminar.' }
     },
     csc: {
         1: { code: 'CSC108H5', name: 'CSC108: Intro to Programming', emoji: '🐍', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Python programming fundamentals.' },
@@ -912,13 +912,13 @@ export const DEPARTMENT_YEAR_FALLBACKS = {
         1: { code: 'FAH101H5', name: 'FAH101: Introduction to Art History', emoji: '🏛️', category: 'art', department: 'Visual Studies', desc: 'Monuments, paintings, and art history.' },
         2: { code: 'FAH289H5', name: 'FAH289: Art and the Environment', emoji: '🌿', category: 'art', department: 'Visual Studies', desc: 'Ecological aesthetics and landscape art.' },
         3: { code: 'FAH310H5', name: 'FAH310: Curatorial Practice & Museum Studies', emoji: '🖼️', category: 'art', department: 'Visual Studies', desc: 'Exhibition curation and museum archiving.' },
-        4: { code: 'FAH401H5', name: 'FAH401: Advanced Studies in Art History', emoji: '📜', category: 'art', department: 'Visual Studies', desc: 'Senior art history methodology research.' }
+        4: { code: 'FAH480H5', name: 'FAH480H5: Advanced Studies in Art History', emoji: '📜', category: 'art', department: 'Visual Studies', desc: 'Senior art history methodology research.' }
     },
     fas: {
         1: { code: 'FAS143H5', name: 'FAS143: Foundations in Studio Practice', emoji: '🖌️', category: 'art', department: 'Visual Studies', desc: 'Drawing, observation, and studio foundation.' },
         2: { code: 'FAS247H5', name: 'FAS247: Studio Painting I', emoji: '🎨', category: 'art', department: 'Visual Studies', desc: 'Studio painting practice and color dynamics.' },
-        3: { code: 'FAS343H5', name: 'FAS343: Advanced Drawing Practices', emoji: '✏️', category: 'art', department: 'Visual Studies', desc: 'Conceptual drawing and mixed media.' },
-        4: { code: 'FAS450H5', name: 'FAS450: Senior Studio Project Capstone', emoji: '🌟', category: 'art', department: 'Visual Studies', desc: 'Senior graduating studio exhibition.' }
+        3: { code: 'FAS343Y5', name: 'FAS343Y5: Advanced Drawing Practices', emoji: '✏️', category: 'art', department: 'Visual Studies', desc: 'Conceptual drawing and mixed media.' },
+        4: { code: 'FAS450Y5', name: 'FAS450Y5: Senior Studio Project Capstone', emoji: '🌟', category: 'art', department: 'Visual Studies', desc: 'Senior graduating studio exhibition.' }
     },
     sta: {
         1: { code: 'STA107H5', name: 'STA107: Data Representation & Modelling', emoji: '📊', category: 'math', department: 'Mathematical and Computational Sciences', desc: 'Foundational statistical modeling.' },
@@ -930,29 +930,29 @@ export const DEPARTMENT_YEAR_FALLBACKS = {
         1: { code: 'BIO152H5', name: 'BIO152: Introduction to Evolution', emoji: '🧬', category: 'science', department: 'Biology', desc: 'Evolutionary mechanisms and biological diversity.' },
         2: { code: 'BIO202H5', name: 'BIO202: Introductory Molecular Biology', emoji: '🔬', category: 'science', department: 'Biology', desc: 'DNA replication, transcription, and translation.' },
         3: { code: 'BIO310H5', name: 'BIO310: Physiology of Microorganisms', emoji: '🧫', category: 'science', department: 'Biology', desc: 'Microbial energetics and metabolic paths.' },
-        4: { code: 'BIO400H5', name: 'BIO400: Capstone in Molecular Biology', emoji: '🧪', category: 'science', department: 'Biology', desc: 'Senior laboratory investigation.' }
+        4: { code: 'BIO400Y5', name: 'BIO400Y5: Capstone in Molecular Biology', emoji: '🧪', category: 'science', department: 'Biology', desc: 'Senior laboratory investigation.' }
     },
     chm: {
         1: { code: 'CHM110H5', name: 'CHM110: Chemical Principles I', emoji: '🧪', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Chemical kinetics, equilibria, and stoichiometry.' },
         2: { code: 'CHM242H5', name: 'CHM242: Organic Chemistry I', emoji: '⚗️', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Reaction mechanisms, synthesis, and functional groups.' },
         3: { code: 'CHM341H5', name: 'CHM341: Advanced Organic Chemistry', emoji: '🔬', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Stereochemistry and catalytic reactions.' },
-        4: { code: 'CHM489H5', name: 'CHM489: Chemistry Research Project', emoji: '🧪', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Independent fourth-year chemistry thesis.' }
+        4: { code: 'CHM489Y5', name: 'CHM489Y5: Chemistry Research Project', emoji: '🧪', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Independent fourth-year chemistry thesis.' }
     },
     phy: {
         1: { code: 'PHY136H5', name: 'PHY136: Intro to Physics I', emoji: '⚡', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Mechanics, kinematics, and Newtonian dynamics.' },
         2: { code: 'PHY241H5', name: 'PHY241: Classical Mechanics', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Lagrangian mechanics and central force motions.' },
-        3: { code: 'PHY354H5', name: 'PHY354: Quantum Mechanics', emoji: '⚛️', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Wave functions, operators, and Schrödinger equation.' },
-        4: { code: 'PHY490H5', name: 'PHY490: Physics Capstone Thesis', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior physics laboratory research project.' }
+        3: { code: 'PHY325H5', name: 'PHY325H5: Quantum Mechanics', emoji: '⚛️', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Wave functions, operators, and Schrödinger equation.' },
+        4: { code: 'PHY426H5', name: 'PHY426H5: Physics Capstone Thesis', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior physics laboratory research project.' }
     },
     eng: {
         1: { code: 'ENG100H5', name: 'ENG100: Effective Writing', emoji: '📖', category: 'english', department: 'English and Drama', desc: 'Foundational university writing.' },
         2: { code: 'ENG202H5', name: 'ENG202: British Literature Survey', emoji: '📚', category: 'english', department: 'English and Drama', desc: 'Historical British literature review.' },
-        3: { code: 'ENG307H5', name: 'ENG307: Shakespeare', emoji: '🎭', category: 'english', department: 'English and Drama', desc: 'Shakespearean drama and critical texts.' },
-        4: { code: 'ENG401H5', name: 'ENG401: Advanced Studies in English', emoji: '📜', category: 'english', department: 'English and Drama', desc: 'Senior literary critique seminar.' }
+        3: { code: 'ENG308Y5', name: 'ENG308Y5: Shakespeare', emoji: '🎭', category: 'english', department: 'English and Drama', desc: 'Shakespearean drama and critical texts.' },
+        4: { code: 'ENG400H5', name: 'ENG400H5: Advanced Studies in English', emoji: '📜', category: 'english', department: 'English and Drama', desc: 'Senior literary critique seminar.' }
     },
     wri: {
         1: { code: 'ISP100H5', name: 'ISP100: Writing for University', emoji: '✍️', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Scholarly writing foundations.' },
-        2: { code: 'WRI203H5', name: 'WRI203: Expressive Writing', emoji: '📝', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Narrative voice and expressive essay craft.' },
+        2: { code: 'WRI273H5', name: 'WRI273H5: Expressive Writing', emoji: '📝', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Narrative voice and expressive essay craft.' },
         3: { code: 'WRI360H5', name: 'WRI360: Technical Writing', emoji: '📋', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Professional technical communications.' },
         4: { code: 'WRI410H5', name: 'WRI410: Senior Seminar in Writing', emoji: '🖋️', category: 'writing', department: 'Institute for the Study of University Pedagogy', desc: 'Senior publishing portfolio seminar.' }
     },
@@ -966,31 +966,31 @@ export const DEPARTMENT_YEAR_FALLBACKS = {
         1: { code: 'PHL103H5', name: 'PHL103: Intro to Philosophy', emoji: '🏛️', category: 'humanities', department: 'Philosophy', desc: 'Classical epistemology and ethics.' },
         2: { code: 'PHL245H5', name: 'PHL245: Modern Symbolic Logic', emoji: '🧠', category: 'humanities', department: 'Philosophy', desc: 'Propositional and symbolic logic.' },
         3: { code: 'PHL345H5', name: 'PHL345: Advanced Symbolic Logic', emoji: '⚖️', category: 'humanities', department: 'Philosophy', desc: 'Metatheoretic soundness and completeness.' },
-        4: { code: 'PHL401H5', name: 'PHL401: Advanced Seminar in Philosophy', emoji: '📜', category: 'humanities', department: 'Philosophy', desc: 'Senior philosophical investigation.' }
+        4: { code: 'PHL400H5', name: 'PHL400H5: Advanced Seminar in Philosophy', emoji: '📜', category: 'humanities', department: 'Philosophy', desc: 'Senior philosophical investigation.' }
     },
     psy: {
-        1: { code: 'PSY100H5', name: 'PSY100: Intro to Psychology', emoji: '🧠', category: 'science', department: 'Psychology', desc: 'Perception, cognition, and behavioral sciences.' },
+        1: { code: 'PSY100Y5', name: 'PSY100Y5: Intro to Psychology', emoji: '🧠', category: 'science', department: 'Psychology', desc: 'Perception, cognition, and behavioral sciences.' },
         2: { code: 'PSY201H5', name: 'PSY201: Research Design & Analysis', emoji: '📊', category: 'science', department: 'Psychology', desc: 'Psychological statistics and experimental testing.' },
         3: { code: 'PSY310H5', name: 'PSY310: Cognitive Neuroscience', emoji: '🔬', category: 'science', department: 'Psychology', desc: 'Brain structures, memory networks, and neuro-imaging.' },
-        4: { code: 'PSY400H5', name: 'PSY400: Senior Thesis in Psychology', emoji: '🧬', category: 'science', department: 'Psychology', desc: 'Independent empirical psychological thesis.' }
+        4: { code: 'PSY400Y5', name: 'PSY400Y5: Senior Thesis in Psychology', emoji: '🧬', category: 'science', department: 'Psychology', desc: 'Independent empirical psychological thesis.' }
     },
     soc: {
         1: { code: 'SOC100H5', name: 'SOC100: Intro to Sociology', emoji: '👥', category: 'social', department: 'Sociology', desc: 'Social structures, institutions, and community.' },
         2: { code: 'SOC205H5', name: 'SOC205: Quantitative Research Methods', emoji: '📈', category: 'social', department: 'Sociology', desc: 'Survey methodology and social statistics.' },
-        3: { code: 'SOC300H5', name: 'SOC300: Advanced Sociological Theory', emoji: '📚', category: 'social', department: 'Sociology', desc: 'Marx, Weber, Durkheim, and modern critical theory.' },
-        4: { code: 'SOC400H5', name: 'SOC400: Senior Seminar in Sociology', emoji: '🏛️', category: 'social', department: 'Sociology', desc: 'Senior thesis on institutional inequality.' }
+        3: { code: 'SOC301H5', name: 'SOC301H5: Advanced Sociological Theory', emoji: '📚', category: 'social', department: 'Sociology', desc: 'Marx, Weber, Durkheim, and modern critical theory.' },
+        4: { code: 'SOC401H5', name: 'SOC401H5: Senior Seminar in Sociology', emoji: '🏛️', category: 'social', department: 'Sociology', desc: 'Senior thesis on institutional inequality.' }
     },
     eco: {
-        1: { code: 'ECO100H5', name: 'ECO100: Intro to Economics', emoji: '💰', category: 'social', department: 'Economics', desc: 'Supply, demand, macro-stability, and market mechanisms.' },
-        2: { code: 'ECO200H5', name: 'ECO200: Microeconomic Theory', emoji: '📊', category: 'social', department: 'Economics', desc: 'Consumer utility, firm production, and competitive equilibrium.' },
-        3: { code: 'ECO300H5', name: 'ECO300: International Trade', emoji: '🌐', category: 'social', department: 'Economics', desc: 'Global commerce, exchange rates, and tariffs.' },
-        4: { code: 'ECO400H5', name: 'ECO400: Advanced Microeconomics', emoji: '📈', category: 'social', department: 'Economics', desc: 'Game theory, mechanism design, and information economics.' }
+        1: { code: 'ECO101H5', name: 'ECO101H5: Intro to Economics', emoji: '💰', category: 'social', department: 'Economics', desc: 'Supply, demand, macro-stability, and market mechanisms.' },
+        2: { code: 'ECO200Y5', name: 'ECO200Y5: Microeconomic Theory', emoji: '📊', category: 'social', department: 'Economics', desc: 'Consumer utility, firm production, and competitive equilibrium.' },
+        3: { code: 'ECO310H5', name: 'ECO310H5: International Trade', emoji: '🌐', category: 'social', department: 'Economics', desc: 'Global commerce, exchange rates, and tariffs.' },
+        4: { code: 'ECO400Y5', name: 'ECO400Y5: Advanced Microeconomics', emoji: '📈', category: 'social', department: 'Economics', desc: 'Game theory, mechanism design, and information economics.' }
     },
     mgm: {
         1: { code: 'MGM101H5', name: 'MGM101: Principles of Management', emoji: '💼', category: 'social', department: 'Management', desc: 'Organizational management foundations.' },
         2: { code: 'MGT220H5', name: 'MGT220: Financial Accounting', emoji: '📊', category: 'social', department: 'Management', desc: 'Corporate balance sheets and cash flows.' },
         3: { code: 'MGT330H5', name: 'MGT330: Corporate Finance', emoji: '📈', category: 'social', department: 'Management', desc: 'Capital investments and equity valuation.' },
-        4: { code: 'MGT490H5', name: 'MGT490: Strategic Management Capstone', emoji: '🏆', category: 'social', department: 'Management', desc: 'Senior strategy and business governance.' }
+        4: { code: 'MGT420H5', name: 'MGT420H5: Strategic Management Capstone', emoji: '🏆', category: 'social', department: 'Management', desc: 'Senior strategy and business governance.' }
     }
 };
 
@@ -1023,7 +1023,7 @@ export function resolveCourseYearProgression(elemA, elemB) {
     const cleanCourseId = rawId.replace(/[^a-z0-9]/g, '');
     const cleanCode = (courseElem.code || courseElem.id || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
 
-    // 1. Direct course key lookup in UTM_YEAR_COURSES (handles e.g. mat102 -> MAT202, ast101 -> AST202, computerscience -> CSC)
+    // 1. Direct course key lookup in UTM_YEAR_COURSES (handles e.g. mat102 -> MAT202, ast101 -> AST201H5, computerscience -> CSC)
     if (UTM_YEAR_COURSES[cleanCourseId] && UTM_YEAR_COURSES[cleanCourseId][targetYear]) {
         const item = UTM_YEAR_COURSES[cleanCourseId][targetYear];
         const id = item.code.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -1058,25 +1058,41 @@ export function resolveCourseYearProgression(elemA, elemB) {
         return { id, ...item, parents: [courseElem.name, yearElem.name] };
     }
 
-    // 4. Algorithmic transmutation: construct authentic UTM course code matching target year
-    const fullCodeMatch = cleanCode.match(/^([A-Z]{3})(\d)(\d\d)/);
-    if (fullCodeMatch) {
-        const dept = fullCodeMatch[1];
-        const restDigits = fullCodeMatch[3];
-        const newCode = `${dept}${targetYear}${restDigits}H5`;
-        const newId = newCode.toLowerCase();
-        const baseTitle = courseElem.name.replace(/^[A-Z0-9]+:\s*/, '');
+    // 4. Dynamic UTM Catalog matching for ANY keyword, discipline, or custom element + Year Level
+    if (typeof window !== 'undefined' && window.UTM_COURSES_DB && Array.isArray(window.UTM_COURSES_DB)) {
+        const kw = (courseElem.name || courseElem.id || '').replace(/^(custom_|_)/i, '').toLowerCase().trim();
+        const yearStr = String(targetYear);
 
-        return {
-            id: newId,
-            code: newCode,
-            name: `${newCode}: Advanced Studies in ${baseTitle}`,
-            emoji: courseElem.emoji || '📜',
-            category: courseElem.category || 'math',
-            department: courseElem.department || 'University of Toronto Mississauga',
-            desc: `An authentic Year ${targetYear} UTM undergraduate course advancing studies from ${courseElem.name}.`,
-            parents: [courseElem.name, yearElem.name]
-        };
+        const candidates = window.UTM_COURSES_DB.filter(c => c.code && c.code.length >= 5 && c.code[3] === yearStr);
+
+        // Priority 1: Department code matches keyword prefix (e.g. ECO for Economics, BIO for Biology, PHL for Philosophy)
+        let match = candidates.find(c => {
+            const dept = (c.dept_code || '').toLowerCase();
+            return dept && (kw.startsWith(dept) || (kw.length >= 3 && dept.startsWith(kw.slice(0, 3))));
+        });
+
+        // Priority 2: Keyword is inside the Course Title
+        if (!match) {
+            match = candidates.find(c => (c.title || '').toLowerCase().includes(kw));
+        }
+
+        // Priority 3: Keyword is inside the Course Description
+        if (!match) {
+            match = candidates.find(c => (c.description || '').toLowerCase().includes(kw));
+        }
+
+        if (match) {
+            return {
+                id: match.code.toLowerCase().replace(/[^a-z0-9]/g, ''),
+                code: match.code,
+                name: `${match.code}: ${match.title}`,
+                emoji: courseElem.emoji || '📚',
+                category: match.distribution ? match.distribution.toLowerCase() : (courseElem.category || 'math'),
+                department: match.dept_code ? `${match.dept_code} Department` : 'UTM',
+                desc: match.description || `An authentic Year ${targetYear} UTM course in ${courseElem.name}.`,
+                parents: [courseElem.name, yearElem.name]
+            };
+        }
     }
 
     return null;
@@ -1106,81 +1122,169 @@ export async function generateCourseWithGemini(elemA, elemB, customApiKey = null
     const codeA = elemA.code || '';
     const codeB = elemB.code || '';
 
-    const prompt = `You are an expert University of Toronto Mississauga (UTM) academic course advisor and Infinite Craft game engine.
+    // Check if API key is present and looks like a valid Google AI key (AIzaSy...)
+    const hasValidKey = apiKey && apiKey.startsWith('AIzaSy');
+
+    if (hasValidKey) {
+        try {
+            const prompt = `You are an expert University of Toronto Mississauga (UTM) academic course advisor and Infinite Craft game engine.
 The player combines two concepts/courses at UTM to discover a new, authentic UTM undergraduate course related to those keywords:
 Concept/Course 1: "${nameA}" ${codeA ? `(${codeA})` : ''}
 Concept/Course 2: "${nameB}" ${codeB ? `(${codeB})` : ''}
 
 Your task:
-1. Identify the most authentic, real undergraduate course offered at the University of Toronto Mississauga (UTM) that teaches, embodies, or combines these concepts.
-   Real UTM course examples: MAT102H5, MAT135H5, MAT202H5, MAT232H5, CSC104H5, CSC108H5, CSC148H5, CSC207H5, CSC209H5, CSC236H5, CSC258H5, CSC263H5, CSC301H5, CSC309H5, CSC311H5, CSC343H5, CSC358H5, CSC363H5, CSC369H5, CSC373H5, CSC384H5, CSC404H5, CSC413H5, CSC458H5, CSC469H5, CSC488H5, CSC490H5, AST101H5, AST202H5, AST301H5, FAH101H5, FAS143H5, FAS247H5, CCT110H5, CCT111H5, VCC101H5, CIN101H5, STA107H5, STA256H5, STA302H5, WRI173H5, ISP100H5, ENG100H5, PHL245H5, PHL247H5, BIO152H5, BIO202H5, CHM110H5, PHY136H5, PSY100H5, SOC100H5, ECO100H5, MGM101H5, GGR101H5, HIS102H5, RLG101H5, ANT101H5, LIN200H5, etc.
-2. If one item is an Academic Year Level (e.g. "1st Year", "2nd Year", "3rd Year", "4th Year") and the other is a course or discipline:
-   Provide an authentic, real UTM undergraduate course in the same subject/department at that specific year level (100-level for 1st, 200-level for 2nd, 300-level for 3rd, 400-level for 4th).
-   Examples: Computer Science + 1st Year → CSC108H5, CSC108 + 2nd Year → CSC207H5, Hardware + 2nd Year → CSC258H5, Algorithms + 2nd Year → CSC263H5, Art + 1st Year → FAH101H5.
-3. Special keyword mappings for hard-to-reach courses:
-   - "Hardware" or "Circuits" + Computer Science → CSC258H5 (Computer Organization)
-   - "Algorithms" + Logic or Theory → CSC236H5 (Theory of Computation)
-   - "Algorithms" + Math → CSC263H5 (Data Structures and Analysis)
-   - "Networks" + Computer Science → CSC358H5 (Computer Networks)
-   - "Software Engineering" → CSC301H5 or CSC207H5
-4. If both items are already courses, provide the next higher-level UTM course that builds on them.
-5. Custom keywords: if given a custom topic, map it to the closest real UTM course that studies that topic.
+1. Determine whether there is a genuine, meaningful academic connection between these two concepts or courses.
+2. COMPATIBILITY & NO-CONNECTION RULE:
+   If the two concepts or courses DO NOT merge well together, have no meaningful connection, or there is no legitimate, authentic UTM undergraduate course that genuinely combines or connects both topics (for example: completely unrelated topics with no plausible academic intersection at UTM):
+   You MUST return ONLY:
+   {
+     "no_match": true
+   }
+3. If there IS an authentic connection:
+   Identify a real, authentic undergraduate course actually offered at UTM (e.g., CSC108H5, CSC148H5, MAT102H5, MAT135H5, BIO152H5, CHM110H5, PHY136H5, PSY100Y5, SOC100H5, ECO101H5, etc.). Do not hallucinate fake course codes.
 
-Return ONLY a valid JSON object with this exact structure:
+Return ONLY a valid JSON object.
+If compatible:
 {
+  "no_match": false,
   "code": "CSC148H5",
   "name": "Introduction to Computer Science",
   "emoji": "🌳",
   "category": "cs",
   "department": "Mathematical and Computational Sciences",
-  "desc": "Brief witty 1-2 sentence description explaining how this UTM course connects both concepts."
+  "desc": "Brief 1-2 sentence description explaining how this UTM course connects both concepts."
+}
+If incompatible or no good connection:
+{
+  "no_match": true
 }
 
 Valid categories: "math", "cs", "art", "science", "english", "writing", "presentation", "humanities", "social", "year".
 Output ONLY pure JSON.`;
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
 
-    const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: {
-                responseMimeType: 'application/json'
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: {
+                        responseMimeType: 'application/json'
+                    }
+                })
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (candidate) {
+                    const parsed = JSON.parse(candidate);
+                    if (parsed.no_match === true || !parsed.code) {
+                        return null; // Explicitly no match / cannot merge
+                    }
+
+                    const cleanCode = parsed.code.trim().toUpperCase();
+
+                    // Verify against loaded UTM courses database to prevent hallucinations
+                    let verifiedCourse = null;
+                    if (window.UTM_COURSES_DB && Array.isArray(window.UTM_COURSES_DB)) {
+                        verifiedCourse = window.UTM_COURSES_DB.find(c => c.code.toUpperCase() === cleanCode);
+                        if (!verifiedCourse) {
+                            console.log(`Course ${cleanCode} not found in official UTM database. Rejecting hallucination.`);
+                            return null;
+                        }
+                    }
+
+                    const cleanId = cleanCode.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const titleText = verifiedCourse ? verifiedCourse.title : (parsed.name || cleanCode);
+                    const displayName = `${cleanCode}: ${titleText.replace(/^[A-Z0-9]+:\s*/, '')}`;
+
+                    return {
+                        id: cleanId,
+                        code: cleanCode,
+                        name: displayName,
+                        emoji: parsed.emoji || '📜',
+                        category: parsed.category || (verifiedCourse && verifiedCourse.dept_code ? verifiedCourse.dept_code.toLowerCase() : 'math'),
+                        department: parsed.department || (verifiedCourse && verifiedCourse.dept_code ? `${verifiedCourse.dept_code} Department` : 'University of Toronto Mississauga'),
+                        desc: (verifiedCourse && verifiedCourse.description) || parsed.desc || `An authentic UTM course combining ${nameA} and ${nameB}.`,
+                        isAiGenerated: true,
+                        parents: [nameA, nameB]
+                    };
+                }
             }
-        })
-    });
-
-    if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(`Gemini API error (${res.status}): ${errorText}`);
+        } catch (err) {
+            console.warn('Gemini API call failed or timed out:', err);
+        }
     }
 
-    const data = await res.json();
-    const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!candidate) {
-        throw new Error('No candidate content received from Gemini Flash-Lite');
+    // Fallback: Check if there is an authentic course in window.UTM_COURSES_DB connecting both
+    if (window.UTM_COURSES_DB && Array.isArray(window.UTM_COURSES_DB)) {
+        const cleanNameA = nameA.replace(/^(custom_|_)/i, '').toLowerCase().trim();
+        const cleanNameB = nameB.replace(/^(custom_|_)/i, '').toLowerCase().trim();
+        const termsA = [cleanNameA, codeA.toLowerCase()].filter(Boolean);
+        const termsB = [cleanNameB, codeB.toLowerCase()].filter(Boolean);
+
+        // Find a real UTM course whose title, description, department or prerequisites mention meaningful elements of both
+        const connecting = window.UTM_COURSES_DB.find(c => {
+            const fullText = `${c.code} ${c.dept_code || ''} ${c.title} ${c.description || ''} ${c.prerequisites || ''}`.toLowerCase();
+            const matchesA = termsA.some(t => t.length > 2 && fullText.includes(t));
+            const matchesB = termsB.some(t => t.length > 2 && fullText.includes(t));
+            return matchesA && matchesB && c.code !== codeA && c.code !== codeB;
+        });
+
+        if (connecting) {
+            const cleanId = connecting.code.toLowerCase().replace(/[^a-z0-9]/g, '');
+            return {
+                id: cleanId,
+                code: connecting.code,
+                name: `${connecting.code}: ${connecting.title}`,
+                emoji: '📚',
+                category: connecting.distribution ? connecting.distribution.toLowerCase() : 'math',
+                department: connecting.dept_code || 'UTM',
+                desc: connecting.description || `An authentic UTM course connecting ${nameA} and ${nameB}.`,
+                isCatalogMatched: true,
+                parents: [nameA, nameB]
+            };
+        }
     }
 
-    const parsed = JSON.parse(candidate);
-    const cleanCode = (parsed.code || 'UTM101H5').trim();
-    const cleanId = cleanCode.toLowerCase().replace(/[^a-z0-9]/g, '');
+    // No meaningful connection found between the two courses/concepts
+    return null;
+}
 
-    // Display title combines course code and course title
-    const displayName = parsed.name.includes(cleanCode.slice(0, 6))
-        ? parsed.name
-        : `${cleanCode}: ${parsed.name}`;
+// Strict Validation Gatekeeper: Ensures every course element is an authentic entry in utm_courses.json
+export function ensureAuthenticUTMCourse(elem) {
+    if (!elem) return null;
 
-    return {
-        id: cleanId,
-        code: cleanCode,
-        name: displayName,
-        emoji: parsed.emoji || '📜',
-        category: parsed.category || 'math',
-        department: parsed.department || 'University of Toronto Mississauga',
-        desc: parsed.desc || `An authentic UTM course combining ${nameA} and ${nameB}.`,
-        isAiGenerated: true,
-        parents: [nameA, nameB]
-    };
+    // Allow starter elements, year levels, or custom user keywords
+    if (elem.category === 'starter' || elem.category === 'year' || elem.isCustom) {
+        return elem;
+    }
+
+    const rawCode = (elem.code || elem.id || '').toUpperCase().trim();
+    if (!rawCode) return null;
+
+    if (typeof window !== 'undefined' && window.UTM_COURSES_DB && Array.isArray(window.UTM_COURSES_DB)) {
+        const realCourse = window.UTM_COURSES_DB.find(c => c.code.toUpperCase() === rawCode);
+        if (!realCourse) {
+            console.warn(`[UTMCraft] REJECTED course "${rawCode}" because it is not an active course in utm_courses.json!`);
+            return null;
+        }
+
+        // Enforce the exact official course code, title, and description from utm_courses.json
+        return {
+            ...elem,
+            id: realCourse.code.toLowerCase().replace(/[^a-z0-9]/g, ''),
+            code: realCourse.code,
+            name: `${realCourse.code}: ${realCourse.title.replace(/^[A-Z0-9]+:\s*/, '')}`,
+            officialTitle: realCourse.title,
+            desc: realCourse.description || elem.desc || '',
+            department: realCourse.dept_code ? `${realCourse.dept_code} Department` : (elem.department || 'UTM'),
+            distribution: realCourse.distribution || elem.distribution || 'Science',
+            isAuthenticUTM: true
+        };
+    }
+
+    return elem;
 }
