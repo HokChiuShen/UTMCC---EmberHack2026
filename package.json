@@ -1,0 +1,12 @@
+{
+  "name": "utm-infinite-craft",
+  "version": "1.0.0",
+  "description": "UTMCraft - UTM University of Toronto Mississauga Course Infinite Craft Game",
+  "type": "module",
+  "scripts": {
+    "start": "python -m http.server 8080"
+  },
+  "keywords": ["utm", "uoft", "infinite-craft", "game"],
+  "author": "Antigravity",
+  "license": "MIT"
+}

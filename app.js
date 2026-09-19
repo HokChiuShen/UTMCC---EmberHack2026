@@ -1,0 +1,777 @@
+// UTMCraft - Main Game Application Logic with Gemini 3.5 Flash-Lite Integration
+import {
+    CATEGORIES,
+    BASE_ELEMENTS,
+    YEAR_ELEMENTS,
+    CURATED_ELEMENTS,
+    STATIC_RECIPES_MAP,
+    getPairKey,
+    isYearElement,
+    getYearLevel,
+    resolveYearProgression,
+    resolveCourseYearProgression,
+    generateCourseWithGemini,
+    GEMINI_MODEL
+} from './recipes.js';
+import { sounds } from './audio.js';
+import { fx } from './particles.js';
+
+class UTMCraftGame {
+    constructor() {
+        this.discovered = new Map(); // id -> element object
+        this.recipesFound = new Map(); // pairKey -> resultId
+        this.canvasCards = []; // Array of card instances on canvas
+        this.activeFilter = 'all';
+        this.searchQuery = '';
+        this.sortBy = 'recent';
+        this.discoveryOrder = []; // Track order of discoveries
+        this.isSynthesizing = false;
+
+        // Drag State
+        this.draggingCard = null;
+        this.dragOffset = { x: 0, y: 0 };
+        this.craftCandidate = null;
+        this.nextInstanceId = 1;
+
+        // DOM Elements
+        this.canvasArea = document.getElementById('canvas-area');
+        this.fxCanvas = document.getElementById('fx-canvas');
+        this.canvasEmptyState = document.getElementById('canvas-empty-state');
+        this.elementsGrid = document.getElementById('elements-grid');
+        this.categoryFilterWrap = document.getElementById('category-filter-wrap');
+        this.searchInput = document.getElementById('search-input');
+        this.searchClear = document.getElementById('search-clear');
+        this.noResults = document.getElementById('no-results');
+        this.trashDropzone = document.getElementById('trash-dropzone');
+        this.clearCanvasBtn = document.getElementById('clear-canvas-btn');
+        this.btnTopClear = document.getElementById('btn-top-clear');
+        this.canvasCardCount = document.getElementById('canvas-card-count');
+        this.statDiscoveredCount = document.getElementById('stat-discovered-count');
+        this.statProgressFill = document.getElementById('stat-progress-fill');
+        this.footerCountText = document.getElementById('footer-count-text');
+        this.sortSelect = document.getElementById('sort-select');
+        this.btnSound = document.getElementById('btn-sound');
+        this.btnEncyclopedia = document.getElementById('btn-encyclopedia');
+        this.modalEncyclopedia = document.getElementById('modal-encyclopedia');
+        this.btnCloseModal = document.getElementById('btn-close-modal');
+        this.btnCloseModalFooter = document.getElementById('btn-close-modal-footer');
+        this.btnResetData = document.getElementById('btn-reset-data');
+        this.toastContainer = document.getElementById('toast-container');
+        this.encyclopediaList = document.getElementById('encyclopedia-list');
+        this.modalDiscoveryStat = document.getElementById('modal-discovery-stat');
+        this.canvasHint = document.getElementById('canvas-hint');
+    }
+
+    init() {
+        // Initialize particle canvas
+        fx.init(this.fxCanvas);
+
+        // Load saved game or start fresh
+        this.loadSaveData();
+
+        // Render UI
+        this.renderCategoryChips();
+        this.renderSidebar();
+        this.updateStats();
+        this.updateSoundButtonUI();
+        this.updateCanvasCardCount(); // Keeps canvas blank initially and updates empty-state watermark
+
+        // Canvas begins completely blank as requested - users can drag or click cards from the sidebar!
+
+        // Attach Event Listeners
+        this.bindEvents();
+    }
+
+    spawnInitialCards() {
+        const rect = this.canvasArea.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        // 2 rows of 3
+        const layout = [
+            { x: -180, y: -70 }, // Math
+            { x: -20,  y: -70 }, // Science
+            { x: 140,  y: -70 }, // English
+            { x: -180, y: 30 },  // Logic
+            { x: -20,  y: 30 },  // Writing
+            { x: 140,  y: 30 }   // Presentation
+        ];
+
+        BASE_ELEMENTS.forEach((item, index) => {
+            const pos = layout[index] || { x: 0, y: 0 };
+            this.createCanvasCard(item, centerX + pos.x, centerY + pos.y, false);
+        });
+    }
+
+    loadSaveData() {
+        // Clear prior version saves so user starts fresh with only default basic elements
+        localStorage.removeItem('utmcraft_save_v1');
+        localStorage.removeItem('utmcraft_save_v2');
+        localStorage.removeItem('utmcraft_save_v3');
+
+        try {
+            const raw = localStorage.getItem('utmcraft_save_v4');
+            if (raw) {
+                const data = JSON.parse(raw);
+                if (data.discovered && Array.isArray(data.discovered)) {
+                    data.discovered.forEach(item => {
+                        this.discovered.set(item.id, item);
+                    });
+                    this.discoveryOrder = data.discoveryOrder || Array.from(this.discovered.keys());
+                }
+                if (data.recipesFound) {
+                    this.recipesFound = new Map(Object.entries(data.recipesFound));
+                }
+            }
+        } catch (e) {
+            console.warn('Failed to parse saved game data, resetting:', e);
+        }
+
+        // Always ensure base default elements exist
+        BASE_ELEMENTS.forEach(elem => {
+            if (!this.discovered.has(elem.id)) {
+                this.discovered.set(elem.id, elem);
+                if (!this.discoveryOrder.includes(elem.id)) {
+                    this.discoveryOrder.push(elem.id);
+                }
+            }
+        });
+
+        this.saveGameData();
+    }
+
+    saveGameData() {
+        try {
+            const data = {
+                discovered: Array.from(this.discovered.values()),
+                discoveryOrder: this.discoveryOrder,
+                recipesFound: Object.fromEntries(this.recipesFound)
+            };
+            localStorage.setItem('utmcraft_save_v4', JSON.stringify(data));
+        } catch (e) {
+            console.warn('Failed to save to localStorage:', e);
+        }
+    }
+
+    renderCategoryChips() {
+        this.categoryFilterWrap.innerHTML = '';
+        Object.entries(CATEGORIES).forEach(([key, cat]) => {
+            const chip = document.createElement('button');
+            chip.className = `cat-chip ${this.activeFilter === key ? 'active' : ''}`;
+            chip.innerHTML = `<span>${cat.icon}</span> <span>${cat.label}</span>`;
+            chip.addEventListener('click', () => {
+                this.activeFilter = key;
+                this.renderCategoryChips();
+                this.renderSidebar();
+            });
+            this.categoryFilterWrap.appendChild(chip);
+        });
+    }
+
+    renderSidebar() {
+        this.elementsGrid.innerHTML = '';
+
+        let items = Array.from(this.discovered.values());
+
+        // Apply Search
+        if (this.searchQuery.trim()) {
+            const query = this.searchQuery.toLowerCase();
+            items = items.filter(i =>
+                i.name.toLowerCase().includes(query) ||
+                (i.code && i.code.toLowerCase().includes(query)) ||
+                (i.desc && i.desc.toLowerCase().includes(query))
+            );
+        }
+
+        // Apply Category Filter
+        if (this.activeFilter !== 'all') {
+            items = items.filter(i => i.category === this.activeFilter);
+        }
+
+        // Apply Sorting
+        if (this.sortBy === 'recent') {
+            items.sort((a, b) => {
+                const idxA = this.discoveryOrder.indexOf(a.id);
+                const idxB = this.discoveryOrder.indexOf(b.id);
+                return idxB - idxA;
+            });
+        } else if (this.sortBy === 'alpha') {
+            items.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (this.sortBy === 'category') {
+            items.sort((a, b) => a.category.localeCompare(b.category) || a.name.localeCompare(b.name));
+        }
+
+        // Toggle empty state
+        this.noResults.style.display = items.length === 0 ? 'block' : 'none';
+
+        // Render card items in drawer
+        items.forEach(elem => {
+            const card = document.createElement('div');
+            card.className = 'element-card';
+            card.dataset.id = elem.id;
+            card.dataset.cat = elem.category || 'starter';
+            card.title = `${elem.code ? `[${elem.code}] ` : ''}${elem.name}\n${elem.desc || ''}\n(Click or drag to canvas)`;
+
+            card.innerHTML = `
+                <span class="elem-emoji">${elem.emoji}</span>
+                <span class="elem-name">${elem.name}</span>
+            `;
+
+            // Fluid Drag or Click from sidebar onto canvas
+            card.addEventListener('pointerdown', (e) => {
+                if (e.button !== 0) return;
+                const startX = e.clientX;
+                const startY = e.clientY;
+                let isDragging = false;
+                let cardInstance = null;
+
+                const onMove = (moveEv) => {
+                    const dist = Math.hypot(moveEv.clientX - startX, moveEv.clientY - startY);
+                    if (!isDragging && dist > 5) {
+                        isDragging = true;
+                        const canvasRect = this.canvasArea.getBoundingClientRect();
+                        const x = moveEv.clientX - canvasRect.left - 50;
+                        const y = moveEv.clientY - canvasRect.top - 20;
+                        cardInstance = this.createCanvasCard(elem, x, y, false);
+                        this.startDraggingCard(cardInstance, moveEv, 50, 20);
+                        cleanup();
+                    }
+                };
+
+                const onUp = () => {
+                    cleanup();
+                    if (!isDragging) {
+                        // Clean Click / Tap: spawn 1 card on canvas near center
+                        const rect = this.canvasArea.getBoundingClientRect();
+                        const spawnX = rect.width / 2 + (Math.random() - 0.5) * 200;
+                        const spawnY = rect.height / 2 + (Math.random() - 0.5) * 160;
+                        this.createCanvasCard(elem, spawnX, spawnY);
+                        sounds.playPop(520);
+                    }
+                };
+
+                const cleanup = () => {
+                    window.removeEventListener('pointermove', onMove);
+                    window.removeEventListener('pointerup', onUp);
+                    window.removeEventListener('pointercancel', cleanup);
+                };
+
+                window.addEventListener('pointermove', onMove);
+                window.addEventListener('pointerup', onUp);
+                window.addEventListener('pointercancel', cleanup);
+            });
+
+            this.elementsGrid.appendChild(card);
+        });
+
+        // Update footer text
+        this.footerCountText.textContent = `${this.discovered.size} UTM courses & keywords`;
+    }
+
+    createCanvasCard(elemData, x, y, playEffect = true) {
+        const instanceId = 'inst-' + (this.nextInstanceId++);
+        const cardEl = document.createElement('div');
+        cardEl.className = 'element-card canvas-card';
+        cardEl.dataset.instanceId = instanceId;
+        cardEl.dataset.id = elemData.id;
+        cardEl.dataset.cat = elemData.category || 'starter';
+        cardEl.title = `${elemData.name}\n${elemData.desc || ''}\n(Double click to duplicate, right click to delete)`;
+
+        // Clamp inside canvas bounds
+        const canvasRect = this.canvasArea.getBoundingClientRect();
+        const clampedX = Math.max(10, Math.min(x, canvasRect.width - 160));
+        const clampedY = Math.max(10, Math.min(y, canvasRect.height - 60));
+
+        cardEl.style.left = `${clampedX}px`;
+        cardEl.style.top = `${clampedY}px`;
+
+        cardEl.innerHTML = `
+            <span class="elem-emoji">${elemData.emoji}</span>
+            <span class="elem-name">${elemData.name}</span>
+        `;
+
+        const cardObj = {
+            instanceId,
+            id: elemData.id,
+            elemData,
+            el: cardEl,
+            x: clampedX,
+            y: clampedY
+        };
+
+        // Pointer down to drag
+        cardEl.addEventListener('pointerdown', (e) => {
+            if (e.button === 0) { // Left click
+                e.preventDefault();
+                e.stopPropagation();
+                const cardRect = cardEl.getBoundingClientRect();
+                const offsetX = e.clientX - cardRect.left;
+                const offsetY = e.clientY - cardRect.top;
+                this.startDraggingCard(cardObj, e, offsetX, offsetY);
+            }
+        });
+
+        // Double click to duplicate card
+        cardEl.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.duplicateCard(cardObj);
+        });
+
+        // Right click to remove card
+        cardEl.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.removeCanvasCard(cardObj);
+            sounds.playTrash();
+        });
+
+        this.canvasArea.appendChild(cardEl);
+        this.canvasCards.push(cardObj);
+        this.updateCanvasCardCount();
+
+        if (playEffect) {
+            fx.burst(clampedX + 60, clampedY + 20, false);
+        }
+
+        return cardObj;
+    }
+
+    duplicateCard(cardObj) {
+        const offset = 28;
+        this.createCanvasCard(cardObj.elemData, cardObj.x + offset, cardObj.y + offset);
+        sounds.playPop(580);
+    }
+
+    removeCanvasCard(cardObj) {
+        if (cardObj.el && cardObj.el.parentNode) {
+            cardObj.el.parentNode.removeChild(cardObj.el);
+        }
+        this.canvasCards = this.canvasCards.filter(c => c.instanceId !== cardObj.instanceId);
+        this.updateCanvasCardCount();
+    }
+
+    updateCanvasCardCount() {
+        this.canvasCardCount.textContent = this.canvasCards.length;
+        if (this.canvasEmptyState) {
+            this.canvasEmptyState.classList.toggle('hidden', this.canvasCards.length > 0);
+        }
+    }
+
+    clearCanvas() {
+        if (this.canvasCards.length === 0) return;
+        this.canvasCards.forEach(card => {
+            if (card.el && card.el.parentNode) {
+                card.el.parentNode.removeChild(card.el);
+            }
+        });
+        this.canvasCards = [];
+        this.updateCanvasCardCount();
+        sounds.playTrash();
+    }
+
+    startDraggingCard(cardObj, e, offsetX, offsetY) {
+        this.draggingCard = cardObj;
+        this.dragOffset = { x: offsetX, y: offsetY };
+        cardObj.el.classList.add('dragging');
+        sounds.playPop(440);
+
+        // Bring to front
+        this.canvasArea.appendChild(cardObj.el);
+    }
+
+    handlePointerMove(e) {
+        if (!this.draggingCard) return;
+
+        const canvasRect = this.canvasArea.getBoundingClientRect();
+        let curX = e.clientX - canvasRect.left - this.dragOffset.x;
+        let curY = e.clientY - canvasRect.top - this.dragOffset.y;
+
+        // Keep inside canvas boundary
+        curX = Math.max(0, Math.min(curX, canvasRect.width - 120));
+        curY = Math.max(0, Math.min(curY, canvasRect.height - 48));
+
+        this.draggingCard.x = curX;
+        this.draggingCard.y = curY;
+        this.draggingCard.el.style.left = `${curX}px`;
+        this.draggingCard.el.style.top = `${curY}px`;
+
+        // Check hover over Trash Zone
+        const trashRect = this.trashDropzone.getBoundingClientRect();
+        const isOverTrash = (
+            e.clientX >= trashRect.left &&
+            e.clientX <= trashRect.right &&
+            e.clientY >= trashRect.top &&
+            e.clientY <= trashRect.bottom
+        );
+
+        if (isOverTrash) {
+            this.trashDropzone.classList.add('hovering');
+        } else {
+            this.trashDropzone.classList.remove('hovering');
+        }
+
+        // Collision detection for card craft combination
+        const cardCenter = {
+            x: curX + 60,
+            y: curY + 22
+        };
+
+        let closestCandidate = null;
+        let minDistance = 75; // Snap distance threshold
+
+        for (const other of this.canvasCards) {
+            if (other.instanceId === this.draggingCard.instanceId) continue;
+
+            const otherCenter = {
+                x: other.x + 60,
+                y: other.y + 22
+            };
+
+            const dist = Math.hypot(cardCenter.x - otherCenter.x, cardCenter.y - otherCenter.y);
+            if (dist < minDistance) {
+                minDistance = dist;
+                closestCandidate = other;
+            }
+        }
+
+        // Update visual highlight on candidate card
+        if (this.craftCandidate && this.craftCandidate !== closestCandidate) {
+            this.craftCandidate.el.classList.remove('craft-candidate');
+        }
+
+        if (closestCandidate) {
+            closestCandidate.el.classList.add('craft-candidate');
+            this.craftCandidate = closestCandidate;
+        } else {
+            this.craftCandidate = null;
+        }
+    }
+
+    async handlePointerUp(e) {
+        if (!this.draggingCard) return;
+
+        const card = this.draggingCard;
+        const candidate = this.craftCandidate;
+        card.el.classList.remove('dragging');
+
+        // Check if dropped into trash
+        const trashRect = this.trashDropzone.getBoundingClientRect();
+        const isOverTrash = (
+            e.clientX >= trashRect.left &&
+            e.clientX <= trashRect.right &&
+            e.clientY >= trashRect.top &&
+            e.clientY <= trashRect.bottom
+        );
+
+        if (isOverTrash) {
+            this.removeCanvasCard(card);
+            this.trashDropzone.classList.remove('hovering');
+            sounds.playTrash();
+            this.draggingCard = null;
+            if (candidate) candidate.el.classList.remove('craft-candidate');
+            this.craftCandidate = null;
+            return;
+        }
+
+        // Check if dropped onto another card to craft
+        if (candidate) {
+            candidate.el.classList.remove('craft-candidate');
+            this.draggingCard = null;
+            this.craftCandidate = null;
+            await this.executeCraft(card, candidate);
+        } else {
+            sounds.playPop(390);
+            this.draggingCard = null;
+            this.craftCandidate = null;
+        }
+    }
+
+    async executeCraft(cardA, cardB) {
+        const elemA = cardA.elemData;
+        const elemB = cardB.elemData;
+        const pairKey = getPairKey(elemA.id, elemB.id);
+
+        const spawnX = (cardA.x + cardB.x) / 2;
+        const spawnY = (cardA.y + cardB.y) / 2;
+
+        // Show loading placeholder indicator
+        cardB.el.innerHTML = `<span class="elem-emoji">⚡</span> <span class="elem-name">Consulting UTM Catalog...</span>`;
+        cardB.el.classList.add('craft-candidate');
+        sounds.playPop(480);
+
+        let resultElem = null;
+
+        // 1. Check local recipe cache first (0ms instantaneous lookup for previously discovered combos)
+        const cachedId = this.recipesFound.get(pairKey);
+        if (cachedId && this.discovered.has(cachedId)) {
+            resultElem = this.discovered.get(cachedId);
+        } else if (STATIC_RECIPES_MAP.has(pairKey)) {
+            resultElem = STATIC_RECIPES_MAP.get(pairKey);
+        }
+
+        // 2. Check Year progression or Course + Year Level transmutation
+        if (!resultElem) {
+            const yearProgression = resolveCourseYearProgression(elemA, elemB);
+            if (yearProgression) {
+                resultElem = yearProgression;
+            }
+        }
+
+        // 3. Query Gemini 3.5 Flash-Lite API
+        if (!resultElem) {
+            try {
+                resultElem = await generateCourseWithGemini(elemA, elemB);
+            } catch (err) {
+                console.warn('Gemini Flash-Lite API error, using fallback:', err);
+                // Fallback course synthesizer
+                resultElem = {
+                    id: `utm-${pairKey.replace('___', '-')}`,
+                    code: 'UTM200H5',
+                    name: `UTM200: Topics in ${elemA.name} & ${elemB.name}`,
+                    emoji: '📜',
+                    category: elemA.category || 'math',
+                    department: 'Interdisciplinary UTM Studies',
+                    desc: `An interdisciplinary UTM undergraduate course exploring the relationship between ${elemA.name} and ${elemB.name}.`
+                };
+            }
+        }
+
+        // Remove the two merged cards from the canvas
+        this.removeCanvasCard(cardA);
+        this.removeCanvasCard(cardB);
+
+        // Notify if 4th Year Max Level merge
+        if (resultElem.isMaxLevel) {
+            this.showMaxYearToast();
+        }
+
+        // Check if first discovery
+        const isFirstDiscovery = !this.discovered.has(resultElem.id);
+
+        if (isFirstDiscovery) {
+            this.discovered.set(resultElem.id, resultElem);
+            this.discoveryOrder.push(resultElem.id);
+            this.recipesFound.set(pairKey, resultElem.id);
+
+            // Celebration sound & particles
+            sounds.playDiscovery();
+            fx.burst(spawnX + 60, spawnY + 22, true);
+
+            // Toast notification
+            this.showDiscoveryToast(resultElem);
+
+            // Save and refresh UI
+            this.saveGameData();
+            this.renderSidebar();
+            this.updateStats();
+        } else {
+            this.recipesFound.set(pairKey, resultElem.id);
+            sounds.playCraft();
+            fx.burst(spawnX + 60, spawnY + 22, false);
+        }
+
+        // Spawn result card on canvas
+        const newCard = this.createCanvasCard(resultElem, spawnX, spawnY, false);
+        if (isFirstDiscovery) {
+            newCard.el.classList.add('new-discovery');
+            setTimeout(() => {
+                newCard.el.classList.remove('new-discovery');
+            }, 3000);
+        }
+    }
+
+    showDiscoveryToast(elem) {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        const tagText = elem.category === 'year' ? '🎓 Academic Year Level Unlocked!' : '✨ New UTM Course Discovered!';
+        toast.innerHTML = `
+            <span class="toast-icon">${elem.emoji}</span>
+            <div class="toast-content">
+                <span class="toast-tag">${tagText}</span>
+                <span class="toast-title">${elem.name}</span>
+                <span style="font-size: 11px; color: var(--text-muted);">${elem.department || 'University of Toronto Mississauga'}</span>
+            </div>
+        `;
+        this.toastContainer.appendChild(toast);
+
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+        }, 4500);
+    }
+
+    showMaxYearToast() {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `
+            <span class="toast-icon">🎓</span>
+            <div class="toast-content">
+                <span class="toast-tag" style="color: var(--utm-gold);">Maximum Level Reached</span>
+                <span class="toast-title">4th Year (Senior Capstone)</span>
+                <span style="font-size: 11px; color: var(--text-muted);">4th Year is the maximum undergraduate year at UTM!</span>
+            </div>
+        `;
+        this.toastContainer.appendChild(toast);
+
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+        }, 4500);
+    }
+
+    updateStats() {
+        const count = this.discovered.size;
+        this.statDiscoveredCount.textContent = count;
+        this.statProgressFill.style.width = `${Math.min(100, Math.max(10, count * 5))}%`;
+    }
+
+    updateSoundButtonUI() {
+        if (sounds.isMuted()) {
+            this.btnSound.textContent = '🔇';
+            this.btnSound.title = 'Sound Effects Muted (Click to unmute)';
+        } else {
+            this.btnSound.textContent = '🔊';
+            this.btnSound.title = 'Sound Effects On (Click to mute)';
+        }
+    }
+
+    openEncyclopediaModal() {
+        this.modalDiscoveryStat.textContent = `${this.discovered.size} UTM courses & keywords unlocked`;
+        this.encyclopediaList.innerHTML = '';
+
+        const allKnown = Array.from(this.discovered.values());
+
+        allKnown.forEach(elem => {
+            const itemEl = document.createElement('div');
+            itemEl.className = 'encyclopedia-item';
+
+            // Find recipes that produce this element
+            const craftRecipes = [];
+            this.recipesFound.forEach((resId, pairKey) => {
+                if (resId === elem.id) {
+                    const [idA, idB] = pairKey.split('___');
+                    const itemA = this.discovered.get(idA) || CURATED_ELEMENTS[idA];
+                    const itemB = this.discovered.get(idB) || CURATED_ELEMENTS[idB];
+                    if (itemA && itemB) {
+                        craftRecipes.push(`${itemA.emoji} ${itemA.name} + ${itemB.emoji} ${itemB.name}`);
+                    }
+                }
+            });
+
+            const recipeText = craftRecipes.length > 0
+                ? `<div class="item-recipe-hint">Crafted from: ${craftRecipes.join(' OR ')}</div>`
+                : (elem.parents ? `<div class="item-recipe-hint">Synthesized from: ${elem.parents.join(' + ')}</div>` : '');
+
+            itemEl.innerHTML = `
+                <span class="item-badge">${elem.emoji}</span>
+                <div class="item-info">
+                    <div class="item-header">
+                        <span class="item-title">${elem.name}</span>
+                        <span class="item-category-tag">${CATEGORIES[elem.category]?.label || elem.category}</span>
+                    </div>
+                    <div class="item-description">${elem.desc || 'An authentic UTM academic course.'}</div>
+                    <div style="font-size: 11px; color: var(--accent-blue); margin-top: 3px;">🏛️ ${elem.department || 'UTM'}</div>
+                    ${recipeText}
+                </div>
+            `;
+            this.encyclopediaList.appendChild(itemEl);
+        });
+
+        this.modalEncyclopedia.classList.add('open');
+    }
+
+    closeEncyclopediaModal() {
+        this.modalEncyclopedia.classList.remove('open');
+    }
+
+    resetGame() {
+        if (confirm('Reset your discovered UTM courses back to the starter disciplines and 1st Year?')) {
+            localStorage.removeItem('utmcraft_save_v2');
+            this.discovered.clear();
+            this.recipesFound.clear();
+            this.discoveryOrder = [];
+            this.clearCanvas();
+
+            BASE_ELEMENTS.forEach(elem => {
+                this.discovered.set(elem.id, elem);
+                this.discoveryOrder.push(elem.id);
+            });
+
+            this.saveGameData();
+            this.renderSidebar();
+            this.updateStats();
+            this.updateCanvasCardCount();
+            this.closeEncyclopediaModal();
+            sounds.playTrash();
+        }
+    }
+
+    bindEvents() {
+        // Pointer events for canvas dragging & dropping
+        window.addEventListener('pointermove', (e) => this.handlePointerMove(e));
+        window.addEventListener('pointerup', (e) => this.handlePointerUp(e));
+
+        // Search bar
+        this.searchInput.addEventListener('input', (e) => {
+            this.searchQuery = e.target.value;
+            this.searchClear.classList.toggle('visible', this.searchQuery.length > 0);
+            this.renderSidebar();
+        });
+
+        this.searchClear.addEventListener('click', () => {
+            this.searchInput.value = '';
+            this.searchQuery = '';
+            this.searchClear.classList.remove('visible');
+            this.renderSidebar();
+        });
+
+        // Sort select
+        this.sortSelect.addEventListener('change', (e) => {
+            this.sortBy = e.target.value;
+            this.renderSidebar();
+        });
+
+        // Clear Canvas Buttons
+        this.clearCanvasBtn.addEventListener('click', () => this.clearCanvas());
+        this.btnTopClear.addEventListener('click', () => this.clearCanvas());
+
+        // Sound toggle
+        this.btnSound.addEventListener('click', () => {
+            sounds.toggleMute();
+            this.updateSoundButtonUI();
+            if (!sounds.isMuted()) {
+                sounds.playPop(600);
+            }
+        });
+
+        // Encyclopedia / Guide Modal
+        this.btnEncyclopedia.addEventListener('click', () => this.openEncyclopediaModal());
+        this.btnCloseModal.addEventListener('click', () => this.closeEncyclopediaModal());
+        this.btnCloseModalFooter.addEventListener('click', () => this.closeEncyclopediaModal());
+        this.modalEncyclopedia.addEventListener('click', (e) => {
+            if (e.target === this.modalEncyclopedia) {
+                this.closeEncyclopediaModal();
+            }
+        });
+
+        // Reset progress
+        this.btnResetData.addEventListener('click', () => this.resetGame());
+
+        // Dismiss hint on first click
+        this.canvasArea.addEventListener('click', () => {
+            if (this.canvasHint) {
+                this.canvasHint.style.opacity = '0.4';
+            }
+        }, { once: true });
+    }
+}
+
+// Start Game on DOM Load
+window.addEventListener('DOMContentLoaded', () => {
+    const game = new UTMCraftGame();
+    game.init();
+    window.utmCraft = game;
+});

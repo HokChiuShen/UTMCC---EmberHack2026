@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTMCraft - UTM Course Recommender & Infinite Craft</title>
+    <meta name="description" content="An Infinite Craft game powered by Gemini Flash-Lite. Combine Math, Science, English, Logic, Writing, and Presentation to discover authentic University of Toronto Mississauga (UTM) undergraduate courses!">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <div id="app">
+        <!-- Top Navigation Bar -->
+        <header class="topbar">
+            <div class="brand-section">
+                <div class="brand-logo" title="UTM Course Alchemist">🎓</div>
+                <div class="brand-title">
+                    <h1>UTMCraft <span>✨</span></h1>
+                    <span class="brand-tag">UTM Course Discovery • Gemini Flash-Lite</span>
+                </div>
+            </div>
+
+            <!-- Central Discovery Stats -->
+            <div class="stats-pill" id="stats-pill">
+                <div class="stat-item">
+                    <span>Discovered:</span>
+                    <span class="stat-val gold" id="stat-discovered-count">6</span>
+                    <span class="stat-total">courses & keywords</span>
+                </div>
+                <div class="stat-progress-bar" title="Discovery Progress">
+                    <div class="stat-progress-fill" id="stat-progress-fill" style="width: 15%;"></div>
+                </div>
+                <div class="stat-item">
+                    <span style="font-size: 11px; color: #10B981; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+                        <span style="width: 7px; height: 7px; background: #10B981; border-radius: 50%; box-shadow: 0 0 6px #10B981;"></span>
+                        ⚡ Flash-Lite Active
+                    </span>
+                </div>
+            </div>
+
+            <!-- Topbar Actions -->
+            <div class="topbar-actions">
+                <button class="btn-text" id="btn-encyclopedia" title="View Discovered Courses & Recipe Guide">
+                    <span>📖</span> Course Catalog
+                </button>
+                <button class="btn-icon" id="btn-sound" title="Toggle Sound Effects" aria-label="Toggle Sound">
+                    🔊
+                </button>
+                <button class="btn-text danger" id="btn-top-clear" title="Clear all cards from canvas">
+                    <span>🧹</span> Clear
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace Layout -->
+        <main class="main-layout">
+            <!-- Workbench Canvas Area -->
+            <section class="canvas-area" id="canvas-area">
+                <canvas id="fx-canvas"></canvas>
+
+                <!-- Empty State Guide Watermark -->
+                <div class="canvas-empty-state" id="canvas-empty-state">
+                    <div class="empty-icon">✨</div>
+                    <div class="empty-title">Canvas is Ready</div>
+                    <div class="empty-desc">Drag or click elements from the sidebar to craft UTM courses</div>
+                    <div class="empty-hint">
+                        <span>🎓 Tip: Merge <strong>1st Year</strong> + <strong>1st Year</strong> to reach 2nd Year, or combine any course with a <strong>Year</strong>!</span>
+                    </div>
+                </div>
+
+                <!-- Floating Canvas Instructions -->
+                <div class="canvas-hint" id="canvas-hint">
+                    <span>💡 Combine keywords to discover UTM courses</span>
+                    <span>•</span>
+                    <span>Double-click to clone</span>
+                    <span>•</span>
+                    <span>Drop on <span class="kbd">🗑️ Trash</span> to delete</span>
+                </div>
+
+                <!-- Floating Trash Zone -->
+                <div class="trash-dropzone" id="trash-dropzone" title="Drag element here to remove">
+                    <span>🗑️</span>
+                    <span class="trash-label">Trash</span>
+                </div>
+
+                <!-- Clear Canvas Button -->
+                <button class="clear-canvas-btn" id="clear-canvas-btn">
+                    <span>🧹</span> Clear Canvas (<span id="canvas-card-count">0</span>)
+                </button>
+            </section>
+
+            <!-- Sidebar / Discovered Drawer -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <!-- Search Box -->
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="search-input" class="search-input" placeholder="Search UTM courses or keywords..." autocomplete="off" spellcheck="false">
+                        <button class="search-clear" id="search-clear" title="Clear search">✕</button>
+                    </div>
+
+                    <!-- Department & Category Filter Chips -->
+                    <div class="category-filter-wrap" id="category-filter-wrap">
+                        <!-- Populated dynamically by JS -->
+                    </div>
+                </div>
+
+                <!-- Elements Grid -->
+                <div class="elements-grid-container">
+                    <div class="elements-grid" id="elements-grid">
+                        <!-- Discovered elements will render here -->
+                    </div>
+                    <div class="no-results" id="no-results" style="display: none;">
+                        No matching UTM courses found. Combine keywords to discover more!
+                    </div>
+                </div>
+
+                <!-- Sidebar Footer -->
+                <div class="sidebar-footer">
+                    <span id="footer-count-text">6 items unlocked</span>
+                    <select id="sort-select" class="sort-select">
+                        <option value="recent">Sort: Newest</option>
+                        <option value="alpha">Sort: A - Z</option>
+                        <option value="category">Sort: Department</option>
+                    </select>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Recipe Encyclopedia & Course Compendium Modal -->
+    <div class="modal-overlay" id="modal-encyclopedia">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span>📚</span>
+                    <h2>UTM Course Compendium & Academic Guide</h2>
+                </div>
+                <button class="btn-icon" id="btn-close-modal" title="Close modal">✕</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="lore-callout">
+                    Welcome to <strong>UTMCraft</strong>! Combine the foundational disciplines—<strong>Math, Science, English, Logic, Writing, Presentation</strong>—and <strong>Academic Year Levels (1st to 4th Year)</strong> with UTM courses to uncover, level up, and master real University of Toronto Mississauga undergraduate courses. Powered live by <strong>Gemini 3.5 Flash-Lite</strong>!
+                </div>
+
+                <div class="stat-item" style="margin-bottom: 8px;">
+                    <strong style="color: var(--text-primary);">Discovered Catalog:</strong>
+                    <span id="modal-discovery-stat" style="color: var(--utm-gold); margin-left: 6px;">6 unlocked</span>
+                </div>
+
+                <div class="encyclopedia-list" id="encyclopedia-list">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <span style="font-size: 11px; color: var(--text-muted);">
+                    ⚡ Powered live by Gemini 3.5 Flash-Lite API
+                </span>
+                <div class="footer-btn-group">
+                    <button class="btn-text danger" id="btn-reset-data" title="Reset all progress back to 6 base keywords">
+                        Reset Progress
+                    </button>
+                    <button class="btn-text" id="btn-close-modal-footer">
+                        Done
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Game Logic Entry -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
