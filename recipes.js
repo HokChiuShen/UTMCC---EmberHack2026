@@ -645,17 +645,17 @@ export const UTM_YEAR_COURSES = {
     'ast101': {
         2: { code: 'AST201H5', name: 'AST201H5: Exploration of the Solar System', emoji: '🪐', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Planetary astronomy examining the origin, composition, atmospheres, and exploration of solar worlds.' },
         3: { code: 'AST320H5', name: 'AST320H5: Observational Astronomy', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Telescopic observation, astronomical CCD imaging, and stellar spectral classification.' },
-        4: { code: 'AST325H5', name: 'AST325H5: Topics in Modern Astrophysics', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior UTM research capstone covering high-energy astrophysics and cosmic expansion.' }
+        4: { code: 'CPS489Y5', name: 'CPS489Y5: Research in Astronomical & Physical Sciences', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior UTM research capstone covering high-energy astrophysics and cosmic expansion.' }
     },
     'ast101h5': {
         2: { code: 'AST201H5', name: 'AST201H5: Exploration of the Solar System', emoji: '🪐', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Planetary astronomy examining the origin, composition, atmospheres, and exploration of solar worlds.' },
         3: { code: 'AST320H5', name: 'AST320H5: Observational Astronomy', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Telescopic observation, astronomical CCD imaging, and stellar spectral classification.' },
-        4: { code: 'AST325H5', name: 'AST325H5: Topics in Modern Astrophysics', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior UTM research capstone covering high-energy astrophysics and cosmic expansion.' }
+        4: { code: 'CPS489Y5', name: 'CPS489Y5: Research in Astronomical & Physical Sciences', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior UTM research capstone covering high-energy astrophysics and cosmic expansion.' }
     },
     'ast201h5': {
         1: { code: 'AST101H5', name: 'AST101: Exploring the Universe', emoji: '✨', category: 'science', department: 'Chemical and Physical Sciences', desc: 'The 1st-year introduction to galaxies, stars, and cosmological wonders.' },
         3: { code: 'AST320H5', name: 'AST320H5: Observational Astronomy', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Telescopic observation, astronomical CCD imaging, and stellar spectral classification.' },
-        4: { code: 'AST325H5', name: 'AST325H5: Topics in Modern Astrophysics', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior UTM research capstone covering high-energy astrophysics and cosmic expansion.' }
+        4: { code: 'CPS489Y5', name: 'CPS489Y5: Research in Astronomical & Physical Sciences', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Senior UTM research capstone covering high-energy astrophysics and cosmic expansion.' }
     },
 
     // Computer Science
@@ -832,7 +832,7 @@ export const UTM_YEAR_COURSES = {
         4: { code: 'ENG400H5', name: 'ENG400H5: Advanced Studies in English', emoji: '📜', category: 'english', department: 'English and Drama', desc: 'Senior literary critique seminar.' }
     },
     'logic': {
-        1: { code: 'PHL245H5', name: 'PHL245H5: Critical Reasoning', emoji: '🧠', category: 'humanities', department: 'Philosophy', desc: 'Argument analysis and rhetorical fallacy detection.' },
+        1: { code: 'PHL103H5', name: 'PHL103H5: Introduction to Philosophy', emoji: '🏛️', category: 'humanities', department: 'Philosophy', desc: 'Classical epistemology, metaphysics, and philosophical inquiry.' },
         2: { code: 'PHL245H5', name: 'PHL245: Modern Symbolic Logic', emoji: '⚖️', category: 'humanities', department: 'Philosophy', desc: 'Propositional and predicate logic calculus.' },
         3: { code: 'PHL345H5', name: 'PHL345: Advanced Symbolic Logic', emoji: '🏛️', category: 'humanities', department: 'Philosophy', desc: 'Soundness, completeness, and logical metatheory.' },
         4: { code: 'CSC413H5', name: 'CSC413H5: Machine Learning & Data Mining', emoji: '🤖', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Computational logic applied to algorithmic inference.' }
@@ -876,13 +876,13 @@ export const UTM_YEAR_COURSES = {
     },
     'networks': {
         1: { code: 'CSC108H5', name: 'CSC108: Intro to Programming', emoji: '🐍', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Programming foundations before network systems.' },
-        2: { code: 'CSC358H5', name: 'CSC358: Principles of Computer Networks', emoji: '🌐', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'OSI model, routing, and TCP/IP protocols.' },
+        2: { code: 'CSC209H5', name: 'CSC209: Software Tools & Systems Programming', emoji: '🌐', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'OSI model, routing, and TCP/IP protocols.' },
         3: { code: 'CSC309H5', name: 'CSC309: Programming on the Web', emoji: '🌍', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Full-stack web applications and HTTP protocols.' },
         4: { code: 'CSC458H5', name: 'CSC458: Computer Networks', emoji: '📡', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Advanced networking, BGP, and security.' }
     },
     'softwareengineering': {
-        1: { code: 'CSC207H5', name: 'CSC207: Software Design', emoji: '💻', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Java design patterns and clean software architecture.' },
-        2: { code: 'CSC301H5', name: 'CSC301: Introduction to Software Engineering', emoji: '🏗️', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Agile methodology, requirements, and testing.' },
+        1: { code: 'CSC148H5', name: 'CSC148: Introduction to Computer Science', emoji: '🌳', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Abstract data types, recursion, and object-oriented foundations.' },
+        2: { code: 'CSC207H5', name: 'CSC207: Software Design', emoji: '🏗️', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Agile methodology, requirements, and testing.' },
         3: { code: 'CSC301H5', name: 'CSC301H5: Engineering Large Systems', emoji: '🏛️', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Architectural design of enterprise software.' },
         4: { code: 'CSC490H5', name: 'CSC490: Capstone Design Course', emoji: '🎓', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Senior capstone team project and product deployment.' }
     }
@@ -900,7 +900,7 @@ export const DEPARTMENT_YEAR_FALLBACKS = {
         1: { code: 'AST101H5', name: 'AST101: Exploring the Universe', emoji: '✨', category: 'science', department: 'Chemical and Physical Sciences', desc: '1st-year cosmic exploration.' },
         2: { code: 'AST201H5', name: 'AST201H5: Exploration of the Solar System', emoji: '🪐', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Solar system exploration and planetary science.' },
         3: { code: 'AST320H5', name: 'AST320H5: Observational Astronomy', emoji: '🔭', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Telescopic observation and spectral analysis.' },
-        4: { code: 'AST325H5', name: 'AST325H5: Topics in Modern Astrophysics', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Advanced astrophysics research seminar.' }
+        4: { code: 'CPS489Y5', name: 'CPS489Y5: Research in Astronomical & Physical Sciences', emoji: '🌌', category: 'science', department: 'Chemical and Physical Sciences', desc: 'Advanced astrophysics research seminar.' }
     },
     csc: {
         1: { code: 'CSC108H5', name: 'CSC108: Intro to Programming', emoji: '🐍', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Python programming fundamentals.' },
