@@ -37,6 +37,8 @@ Just double-click **`run.bat`** in this folder! It will start the server and aut
 
 ---
 
+## You can run the localhost in package.json and if it doesn't work you can try to run this command in the terminal: "python -m http.server 8080 --bind 127.0.0.1"
+
 ## Game Mechanics
 * **Foundational Disciplines:** Start with Math, Science, Computer Science, Art, English, Logic, Writing, and Presentation.
 * **Academic Year Levels:** Merge year levels (1st Year, 2nd Year, 3rd Year, 4th Year) with disciplines or courses to discover and level up courses strictly matching that year level (100, 200, 300, 400).
