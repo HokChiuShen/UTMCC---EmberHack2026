@@ -232,6 +232,55 @@ export const CONCEPT_KEYWORDS = [
         emoji: '🎨',
         category: 'art',
         desc: 'Graphic composition, typography, studio craft, and visual aesthetics.'
+    }],
+    [['computerscience', 'computerscience'], {
+        id: 'algorithms',
+        name: 'Algorithms',
+        emoji: '⚡',
+        category: 'cs',
+        desc: 'Systematic methods for solving computational problems: sorting, searching, graphs, and complexity.'
+    }],
+    [['logic', 'computerscience'], {
+        id: 'theory',
+        name: 'Theory of Computation',
+        emoji: '🔁',
+        category: 'cs',
+        desc: 'Formal languages, automata, Turing machines, decidability, and complexity theory.'
+    }],
+    [['science', 'computerscience'], {
+        id: 'hardware',
+        name: 'Hardware',
+        emoji: '🖥️',
+        category: 'cs',
+        desc: 'Computer organization: digital logic, circuits, memory hierarchy, and microarchitecture.'
+    }],
+    [['math', 'computerscience'], {
+        id: 'datastructures',
+        name: 'Data Structures',
+        emoji: '🌳',
+        category: 'cs',
+        desc: 'Abstract data types: stacks, queues, trees, heaps, graphs, and hash tables.'
+    }],
+    [['presentation', 'computerscience'], {
+        id: 'networks',
+        name: 'Networks',
+        emoji: '🌐',
+        category: 'cs',
+        desc: 'Computer networking: protocols, TCP/IP, routing, and distributed communication systems.'
+    }],
+    [['hardware', 'logic'], {
+        id: 'circuits',
+        name: 'Logic Circuits',
+        emoji: '🔌',
+        category: 'cs',
+        desc: 'Digital circuit design: Boolean algebra, combinational and sequential logic gates.'
+    }],
+    [['writing', 'computerscience'], {
+        id: 'softwareengineering',
+        name: 'Software Engineering',
+        emoji: '🏗️',
+        category: 'cs',
+        desc: 'Software development methodologies, design patterns, testing, and team collaboration.'
     }]
 ];
 
@@ -377,6 +426,95 @@ const FAST_OFFLINE_RECIPES = [
         desc: 'Critical aesthetic philosophies regarding ecological transformation and built landscapes.'
     }],
 
+    // Hard-to-reach CS courses via new keywords
+    [['algorithms', 'math'], {
+        code: 'CSC263H5',
+        name: 'CSC263: Data Structures and Analysis',
+        emoji: '📊',
+        category: 'cs',
+        department: 'Mathematical and Computational Sciences',
+        desc: 'Priority queues, amortized analysis, union-find, and hashing with formal complexity bounds.'
+    }],
+    [['algorithms', 'logic'], {
+        code: 'CSC236H5',
+        name: 'CSC236: Intro to Theory of Computation',
+        emoji: '🧠',
+        category: 'cs',
+        department: 'Mathematical and Computational Sciences',
+        desc: 'Mathematical induction, correctness proofs, regular languages, and the pumping lemma.'
+    }],
+    [['theory', 'algorithms'], {
+        code: 'CSC236H5',
+        name: 'CSC236: Intro to Theory of Computation',
+        emoji: '🧠',
+        category: 'cs',
+        department: 'Mathematical and Computational Sciences',
+        desc: 'Combining formal theory with algorithmic reasoning for UTM\'s CS POSt gateway.'
+    }],
+    [['hardware', 'computerscience'], {
+        code: 'CSC258H5',
+        name: 'CSC258: Computer Organization',
+        emoji: '🖥️',
+        category: 'cs',
+        department: 'Mathematical and Computational Sciences',
+        desc: 'Digital logic, binary arithmetic, ALUs, datapaths, and MIPS assembly architecture.'
+    }],
+    [['circuits', 'computerscience'], {
+        code: 'CSC258H5',
+        name: 'CSC258: Computer Organization',
+        emoji: '🖥️',
+        category: 'cs',
+        department: 'Mathematical and Computational Sciences',
+        desc: 'From logic gates to full computer datapaths — the classic UTM hardware course.'
+    }],
+    [['hardware', 'math'], {
+        code: 'CSC258H5',
+        name: 'CSC258: Computer Organization',
+        emoji: '🖥️',
+        category: 'cs',
+        department: 'Mathematical and Computational Sciences',
+        desc: 'Mathematical foundations of digital hardware design and binary computation.'
+    }],
+    [['datastructures', 'algorithms'], {
+        code: 'CSC263H5',
+        name: 'CSC263: Data Structures and Analysis',
+        emoji: '📊',
+        category: 'cs',
+        department: 'Mathematical and Computational Sciences',
+        desc: 'Rigorous analysis of classical data structures and algorithm complexity classes.'
+    }],
+    [['networks', 'computerscience'], {
+        code: 'CSC358H5',
+        name: 'CSC358: Principles of Computer Networks',
+        emoji: '🌐',
+        category: 'cs',
+        department: 'Mathematical and Computational Sciences',
+        desc: 'OSI model, TCP/IP protocols, routing algorithms, and network security fundamentals.'
+    }],
+    [['softwareengineering', 'computerscience'], {
+        code: 'CSC301H5',
+        name: 'CSC301: Introduction to Software Engineering',
+        emoji: '🏗️',
+        category: 'cs',
+        department: 'Mathematical and Computational Sciences',
+        desc: 'Agile development, requirements engineering, testing, and software project management.'
+    }],
+    [['algorithms', 'datastructures'], {
+        code: 'CSC373H5',
+        name: 'CSC373: Algorithm Design and Analysis',
+        emoji: '⚡',
+        category: 'cs',
+        department: 'Mathematical and Computational Sciences',
+        desc: 'Greedy, divide-and-conquer, dynamic programming, and NP-completeness reductions.'
+    }],
+    [['networks', 'science'], {
+        code: 'CSC358H5',
+        name: 'CSC358: Principles of Computer Networks',
+        emoji: '🌐',
+        category: 'cs',
+        department: 'Mathematical and Computational Sciences',
+        desc: 'Network protocols and empirical data communications science.'
+    }],
     // Math & Proofs
     [['math', 'logic'], {
         code: 'MAT102H5',
@@ -458,6 +596,9 @@ FAST_OFFLINE_RECIPES.forEach(([pair, course]) => {
     CURATED_ELEMENTS[id] = { id, ...course };
     STATIC_RECIPES_MAP.set(getPairKey(pair[0], pair[1]), CURATED_ELEMENTS[id]);
 });
+
+// Register new concept keywords into CURATED_ELEMENTS
+const NEW_CONCEPT_IDS = ['algorithms', 'theory', 'hardware', 'datastructures', 'networks', 'circuits', 'softwareengineering'];
 
 // Register Year + Year progression recipes into STATIC_RECIPES_MAP
 STATIC_RECIPES_MAP.set(getPairKey('year1', 'year1'), YEAR_ELEMENTS.year2);
@@ -707,6 +848,43 @@ export const UTM_YEAR_COURSES = {
         2: { code: 'CCT200H5', name: 'CCT200: Communication, Information & Culture', emoji: '📡', category: 'presentation', department: 'Institute of Communication, Culture, Information & Technology', desc: 'Cultural and sociological impacts of communication networks.' },
         3: { code: 'CCT300H5', name: 'CCT300: Critical Media Theory', emoji: '🎥', category: 'presentation', department: 'Institute of Communication, Culture, Information & Technology', desc: 'Critical perspectives on digital platforms and multimedia.' },
         4: { code: 'CCT410H5', name: 'CCT410: Senior Capstone in Media & Tech', emoji: '🌟', category: 'presentation', department: 'Institute of Communication, Culture, Information & Technology', desc: 'Senior digital media project and presentation showcase.' }
+    },
+    // New concept keywords
+    'algorithms': {
+        1: { code: 'CSC148H5', name: 'CSC148: Introduction to Computer Science', emoji: '🌳', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Foundational data structures and algorithm design.' },
+        2: { code: 'CSC263H5', name: 'CSC263: Data Structures and Analysis', emoji: '📊', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Priority queues, amortized analysis, and hashing.' },
+        3: { code: 'CSC373H5', name: 'CSC373: Algorithm Design and Analysis', emoji: '⚡', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Greedy, DP, and NP-completeness.' },
+        4: { code: 'CSC411H5', name: 'CSC411: Machine Learning & Data Mining', emoji: '🤖', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Statistical learning theory and neural inference.' }
+    },
+    'theory': {
+        1: { code: 'MAT102H5', name: 'MAT102: Mathematical Proofs', emoji: '🧩', category: 'math', department: 'Mathematical and Computational Sciences', desc: 'The proof foundation for theoretical CS.' },
+        2: { code: 'CSC236H5', name: 'CSC236: Intro to Theory of Computation', emoji: '🧠', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Induction, correctness, and regular languages.' },
+        3: { code: 'CSC363H5', name: 'CSC363: Computational Complexity', emoji: '🔁', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Decidability, Turing machines, and complexity classes.' },
+        4: { code: 'CSC488H5', name: 'CSC488: Compilers and Interpreters', emoji: '⚙️', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Lexical analysis, parsing, and code generation.' }
+    },
+    'hardware': {
+        1: { code: 'CSC108H5', name: 'CSC108: Intro to Programming', emoji: '🐍', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Software foundations before hardware architecture.' },
+        2: { code: 'CSC258H5', name: 'CSC258: Computer Organization', emoji: '🖥️', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'ALUs, datapaths, memory, and MIPS assembly.' },
+        3: { code: 'CSC369H5', name: 'CSC369: Operating Systems', emoji: '⚙️', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Kernel, memory management, and hardware abstraction.' },
+        4: { code: 'CSC469H5', name: 'CSC469: OS Design and Implementation', emoji: '🔧', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Advanced kernel design and systems implementation.' }
+    },
+    'datastructures': {
+        1: { code: 'CSC148H5', name: 'CSC148: Introduction to Computer Science', emoji: '🌳', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Abstract types, recursion, and basic structures.' },
+        2: { code: 'CSC263H5', name: 'CSC263: Data Structures and Analysis', emoji: '📊', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Advanced structures with amortized analysis.' },
+        3: { code: 'CSC343H5', name: 'CSC343: Introduction to Databases', emoji: '🗄️', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Relational algebra, SQL, and data modeling.' },
+        4: { code: 'CSC409H5', name: 'CSC409: Scalable Computing', emoji: '🚀', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Distributed data stores and cloud scalability.' }
+    },
+    'networks': {
+        1: { code: 'CSC108H5', name: 'CSC108: Intro to Programming', emoji: '🐍', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Programming foundations before network systems.' },
+        2: { code: 'CSC358H5', name: 'CSC358: Principles of Computer Networks', emoji: '🌐', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'OSI model, routing, and TCP/IP protocols.' },
+        3: { code: 'CSC309H5', name: 'CSC309: Programming on the Web', emoji: '🌍', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Full-stack web applications and HTTP protocols.' },
+        4: { code: 'CSC458H5', name: 'CSC458: Computer Networks', emoji: '📡', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Advanced networking, BGP, and security.' }
+    },
+    'softwareengineering': {
+        1: { code: 'CSC207H5', name: 'CSC207: Software Design', emoji: '💻', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Java design patterns and clean software architecture.' },
+        2: { code: 'CSC301H5', name: 'CSC301: Introduction to Software Engineering', emoji: '🏗️', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Agile methodology, requirements, and testing.' },
+        3: { code: 'CSC302H5', name: 'CSC302: Engineering Large Systems', emoji: '🏛️', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Architectural design of enterprise software.' },
+        4: { code: 'CSC490H5', name: 'CSC490: Capstone Design Course', emoji: '🎓', category: 'cs', department: 'Mathematical and Computational Sciences', desc: 'Senior capstone team project and product deployment.' }
     }
 };
 
@@ -904,6 +1082,20 @@ export function resolveCourseYearProgression(elemA, elemB) {
     return null;
 }
 
+// Lookup a course code in the utm_courses.json dataset (loaded as window.UTM_COURSES_DB)
+export function lookupUTMCourseByCode(code) {
+    if (typeof window === 'undefined' || !window.UTM_COURSES_DB) return null;
+    const clean = code.toUpperCase().trim();
+    return window.UTM_COURSES_DB.find(c => c.code === clean) || null;
+}
+
+// Lookup courses by department prefix
+export function lookupUTMCoursesByDept(deptCode) {
+    if (typeof window === 'undefined' || !window.UTM_COURSES_DB) return [];
+    const clean = deptCode.toUpperCase().trim();
+    return window.UTM_COURSES_DB.filter(c => c.dept_code === clean);
+}
+
 // Call Gemini Flash-Lite to generate authentic UTM course matching the two inputs
 export async function generateCourseWithGemini(elemA, elemB, customApiKey = null) {
     const savedKey = typeof localStorage !== 'undefined' ? localStorage.getItem('utmcraft_custom_api_key') : null;
@@ -920,11 +1112,19 @@ Concept/Course 1: "${nameA}" ${codeA ? `(${codeA})` : ''}
 Concept/Course 2: "${nameB}" ${codeB ? `(${codeB})` : ''}
 
 Your task:
-1. Identify the most authentic, real undergraduate course offered at the University of Toronto Mississauga (UTM) that teaches, embodies, or combines these concepts (e.g. MAT102H5, MAT202H5, MAT135H5, CSC108H5, CSC148H5, CSC207H5, CSC236H5, AST101H5, AST202H5, FAH101H5, FAS143H5, CCT110H5, CCT111H5, VCC101H5, CIN101H5, STA256H5, WRI173H5, ISP100H5, ENG100H5, PHL245H5, BIO152H5, BIO202H5, CHM110H5, PHY136H5, PSY100H5, SOC100H5, ECO100H5, MGM101H5, etc.).
+1. Identify the most authentic, real undergraduate course offered at the University of Toronto Mississauga (UTM) that teaches, embodies, or combines these concepts.
+   Real UTM course examples: MAT102H5, MAT135H5, MAT202H5, MAT232H5, CSC104H5, CSC108H5, CSC148H5, CSC207H5, CSC209H5, CSC236H5, CSC258H5, CSC263H5, CSC301H5, CSC309H5, CSC311H5, CSC343H5, CSC358H5, CSC363H5, CSC369H5, CSC373H5, CSC384H5, CSC404H5, CSC413H5, CSC458H5, CSC469H5, CSC488H5, CSC490H5, AST101H5, AST202H5, AST301H5, FAH101H5, FAS143H5, FAS247H5, CCT110H5, CCT111H5, VCC101H5, CIN101H5, STA107H5, STA256H5, STA302H5, WRI173H5, ISP100H5, ENG100H5, PHL245H5, PHL247H5, BIO152H5, BIO202H5, CHM110H5, PHY136H5, PSY100H5, SOC100H5, ECO100H5, MGM101H5, GGR101H5, HIS102H5, RLG101H5, ANT101H5, LIN200H5, etc.
 2. If one item is an Academic Year Level (e.g. "1st Year", "2nd Year", "3rd Year", "4th Year") and the other is a course or discipline:
-   Provide an authentic, real UTM undergraduate course in the same subject/department at that specific target year level (100-level for 1st Year, 200-level for 2nd Year, 300-level for 3rd Year, 400-level for 4th Year. For example: Computer Science + 1st Year yields CSC108H5, CSC108 + 2nd Year yields CSC207H5, MAT102 + 2nd Year yields MAT202H5, AST101 + 2nd Year yields AST202H5, Art + 1st Year yields FAH101H5).
-3. If both items are already courses, provide the next higher-level UTM course that builds on them, or an authentic UTM program milestone (e.g., combining CSC148 and MAT102 yields CS POSt or CSC236H5).
-4. If the combination represents a broader academic synthesis, find the best matching real UTM course code.
+   Provide an authentic, real UTM undergraduate course in the same subject/department at that specific year level (100-level for 1st, 200-level for 2nd, 300-level for 3rd, 400-level for 4th).
+   Examples: Computer Science + 1st Year → CSC108H5, CSC108 + 2nd Year → CSC207H5, Hardware + 2nd Year → CSC258H5, Algorithms + 2nd Year → CSC263H5, Art + 1st Year → FAH101H5.
+3. Special keyword mappings for hard-to-reach courses:
+   - "Hardware" or "Circuits" + Computer Science → CSC258H5 (Computer Organization)
+   - "Algorithms" + Logic or Theory → CSC236H5 (Theory of Computation)
+   - "Algorithms" + Math → CSC263H5 (Data Structures and Analysis)
+   - "Networks" + Computer Science → CSC358H5 (Computer Networks)
+   - "Software Engineering" → CSC301H5 or CSC207H5
+4. If both items are already courses, provide the next higher-level UTM course that builds on them.
+5. Custom keywords: if given a custom topic, map it to the closest real UTM course that studies that topic.
 
 Return ONLY a valid JSON object with this exact structure:
 {

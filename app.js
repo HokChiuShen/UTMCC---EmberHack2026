@@ -11,10 +11,17 @@ import {
     resolveYearProgression,
     resolveCourseYearProgression,
     generateCourseWithGemini,
+    lookupUTMCourseByCode,
     GEMINI_MODEL
 } from './recipes.js';
 import { sounds } from './audio.js';
 import { fx } from './particles.js';
+
+// Preload UTM Courses JSON database for course enrichment
+fetch('./utm_courses.json')
+    .then(r => r.json())
+    .then(data => { window.UTM_COURSES_DB = data; console.log(`UTM Courses DB loaded: ${data.length} courses`); })
+    .catch(e => console.warn('Could not load utm_courses.json:', e));
 
 class UTMCraftGame {
     constructor() {
@@ -60,6 +67,16 @@ class UTMCraftGame {
         this.encyclopediaList = document.getElementById('encyclopedia-list');
         this.modalDiscoveryStat = document.getElementById('modal-discovery-stat');
         this.canvasHint = document.getElementById('canvas-hint');
+
+        // Description popup
+        this.descPopup = document.getElementById('desc-popup');
+        this.descPopupClose = document.getElementById('desc-popup-close');
+        this.descPopupDelete = document.getElementById('desc-popup-delete');
+        this._descPopupCard = null;
+
+        // Custom keyword panel
+        this.customKeywordInput = document.getElementById('custom-keyword-input');
+        this.customKeywordBtn = document.getElementById('custom-keyword-btn');
     }
 
     init() {
@@ -108,9 +125,10 @@ class UTMCraftGame {
         localStorage.removeItem('utmcraft_save_v1');
         localStorage.removeItem('utmcraft_save_v2');
         localStorage.removeItem('utmcraft_save_v3');
+        localStorage.removeItem('utmcraft_save_v4');
 
         try {
-            const raw = localStorage.getItem('utmcraft_save_v4');
+            const raw = localStorage.getItem('utmcraft_save_v5');
             if (raw) {
                 const data = JSON.parse(raw);
                 if (data.discovered && Array.isArray(data.discovered)) {
@@ -147,7 +165,7 @@ class UTMCraftGame {
                 discoveryOrder: this.discoveryOrder,
                 recipesFound: Object.fromEntries(this.recipesFound)
             };
-            localStorage.setItem('utmcraft_save_v4', JSON.stringify(data));
+            localStorage.setItem('utmcraft_save_v5', JSON.stringify(data));
         } catch (e) {
             console.warn('Failed to save to localStorage:', e);
         }
@@ -311,19 +329,26 @@ class UTMCraftGame {
             }
         });
 
-        // Double click to duplicate card
-        cardEl.addEventListener('dblclick', (e) => {
-            e.preventDefault();
+        // Double-click detection using click counter (avoids dblclick swallowing)
+        let clickCount = 0;
+        let clickTimer = null;
+        cardEl.addEventListener('click', (e) => {
             e.stopPropagation();
-            this.duplicateCard(cardObj);
+            clickCount++;
+            if (clickCount === 1) {
+                clickTimer = setTimeout(() => { clickCount = 0; }, 300);
+            } else if (clickCount >= 2) {
+                clearTimeout(clickTimer);
+                clickCount = 0;
+                this.duplicateCard(cardObj);
+            }
         });
 
-        // Right click to remove card
+        // Right click to show description popup (replaces delete)
         cardEl.addEventListener('contextmenu', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            this.removeCanvasCard(cardObj);
-            sounds.playTrash();
+            this.showDescPopup(cardObj, e.clientX, e.clientY);
         });
 
         this.canvasArea.appendChild(cardEl);
@@ -335,6 +360,74 @@ class UTMCraftGame {
         }
 
         return cardObj;
+    }
+
+    showDescPopup(cardObj, clientX, clientY) {
+        if (!this.descPopup) return;
+        const elem = cardObj.elemData;
+        this._descPopupCard = cardObj;
+
+        // Enrich with utm_courses.json data if available
+        let enriched = null;
+        if (elem.code) {
+            enriched = lookupUTMCourseByCode(elem.code);
+        }
+
+        const catLabel = CATEGORIES[elem.category]?.label || elem.category || 'UTM Course';
+        const deptText = enriched?.dept_code
+            ? `<span class="popup-dept-badge">${enriched.dept_code}</span>`
+            : '';
+        const prereqText = enriched?.prerequisites
+            ? `<div class="popup-meta-row"><span class="popup-meta-label">📋 Prerequisites:</span> <span>${enriched.prerequisites}</span></div>`
+            : '';
+        const hoursText = enriched?.hours
+            ? `<div class="popup-meta-row"><span class="popup-meta-label">🕐 Hours:</span> <span>${enriched.hours}</span></div>`
+            : '';
+        const distText = enriched?.distribution
+            ? `<div class="popup-meta-row"><span class="popup-meta-label">📚 Distribution:</span> <span>${enriched.distribution}</span></div>`
+            : '';
+        const modeText = enriched?.delivery_mode
+            ? `<div class="popup-meta-row"><span class="popup-meta-label">🏫 Delivery:</span> <span>${enriched.delivery_mode}</span></div>`
+            : '';
+        const fullDesc = enriched?.description || elem.desc || 'A UTM course.';
+
+        document.getElementById('desc-popup-emoji').textContent = elem.emoji || '📜';
+        document.getElementById('desc-popup-title').textContent = elem.name || 'UTM Course';
+        document.getElementById('desc-popup-code').textContent = elem.code || '';
+        document.getElementById('desc-popup-cat').textContent = catLabel;
+        document.getElementById('desc-popup-dept').innerHTML = deptText + (elem.department ? `<span class="popup-dept-text">${elem.department}</span>` : '');
+        document.getElementById('desc-popup-desc').textContent = fullDesc;
+        document.getElementById('desc-popup-meta').innerHTML = prereqText + hoursText + distText + modeText;
+
+        // Position popup near click
+        const popup = this.descPopup;
+        popup.style.display = 'flex';
+        popup.classList.add('open');
+
+        // Wait one frame then position to avoid stale rect
+        requestAnimationFrame(() => {
+            const pw = popup.offsetWidth;
+            const ph = popup.offsetHeight;
+            let px = clientX + 12;
+            let py = clientY - 12;
+            if (px + pw > window.innerWidth - 10) px = clientX - pw - 12;
+            if (py + ph > window.innerHeight - 10) py = window.innerHeight - ph - 10;
+            if (py < 10) py = 10;
+            popup.style.left = `${px}px`;
+            popup.style.top = `${py}px`;
+        });
+    }
+
+    hideDescPopup() {
+        if (this.descPopup) {
+            this.descPopup.classList.remove('open');
+            setTimeout(() => {
+                if (this.descPopup && !this.descPopup.classList.contains('open')) {
+                    this.descPopup.style.display = 'none';
+                }
+            }, 200);
+        }
+        this._descPopupCard = null;
     }
 
     duplicateCard(cardObj) {
@@ -537,6 +630,21 @@ class UTMCraftGame {
             }
         }
 
+        // Enrich result with utm_courses.json full description if available
+        if (resultElem.code) {
+            const enriched = lookupUTMCourseByCode(resultElem.code);
+            if (enriched) {
+                // Use real course title if more accurate than AI title
+                if (!resultElem.name.includes(enriched.code)) {
+                    resultElem = { ...resultElem };
+                }
+                // Use official description if present
+                if (enriched.description && !resultElem.isEnriched) {
+                    resultElem = { ...resultElem, officialDesc: enriched.description, isEnriched: true };
+                }
+            }
+        }
+
         // Remove the two merged cards from the canvas
         this.removeCanvasCard(cardA);
         this.removeCanvasCard(cardB);
@@ -689,7 +797,7 @@ class UTMCraftGame {
 
     resetGame() {
         if (confirm('Reset your discovered UTM courses back to the starter disciplines and 1st Year?')) {
-            localStorage.removeItem('utmcraft_save_v2');
+            localStorage.removeItem('utmcraft_save_v5');
             this.discovered.clear();
             this.recipesFound.clear();
             this.discoveryOrder = [];
@@ -760,12 +868,93 @@ class UTMCraftGame {
         // Reset progress
         this.btnResetData.addEventListener('click', () => this.resetGame());
 
+        // Custom keyword
+        if (this.customKeywordBtn && this.customKeywordInput) {
+            this.customKeywordBtn.addEventListener('click', () => this.addCustomKeyword());
+            this.customKeywordInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') this.addCustomKeyword();
+            });
+        }
+
+        // Description popup close button
+        if (this.descPopupClose) {
+            this.descPopupClose.addEventListener('click', () => this.hideDescPopup());
+        }
+        if (this.descPopupDelete) {
+            this.descPopupDelete.addEventListener('click', () => {
+                if (this._descPopupCard) {
+                    this.removeCanvasCard(this._descPopupCard);
+                    sounds.playTrash();
+                }
+                this.hideDescPopup();
+            });
+        }
+        // Close popup on click outside
+        document.addEventListener('pointerdown', (e) => {
+            if (this.descPopup && this.descPopup.classList.contains('open') &&
+                !this.descPopup.contains(e.target)) {
+                this.hideDescPopup();
+            }
+        }, { capture: true });
+
         // Dismiss hint on first click
         this.canvasArea.addEventListener('click', () => {
             if (this.canvasHint) {
                 this.canvasHint.style.opacity = '0.4';
             }
         }, { once: true });
+    }
+
+    addCustomKeyword() {
+        const input = this.customKeywordInput;
+        if (!input) return;
+        const raw = input.value.trim();
+        if (!raw || raw.length < 2 || raw.length > 32) {
+            input.classList.add('shake');
+            setTimeout(() => input.classList.remove('shake'), 500);
+            return;
+        }
+
+        const name = raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase();
+        const id = 'custom_' + raw.toLowerCase().replace(/[^a-z0-9]/g, '_');
+
+        if (this.discovered.has(id)) {
+            this.showToast(`"${name}" already exists in your collection!`, '⚠️');
+            input.value = '';
+            return;
+        }
+
+        const customElem = {
+            id,
+            name,
+            emoji: '🔮',
+            category: 'starter',
+            desc: `A custom keyword you added: "${name}". Combine it with other elements to discover UTM courses!`,
+            isCustom: true
+        };
+
+        this.discovered.set(id, customElem);
+        this.discoveryOrder.push(id);
+        this.saveGameData();
+        this.renderSidebar();
+        this.updateStats();
+        input.value = '';
+
+        this.showToast(`Custom keyword "${name}" added!`, '🔮');
+        sounds.playDiscovery();
+    }
+
+    showToast(message, icon = '✨') {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `
+            <span class="toast-icon">${icon}</span>
+            <div class="toast-content">
+                <span class="toast-title">${message}</span>
+            </div>
+        `;
+        this.toastContainer.appendChild(toast);
+        setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 4500);
     }
 }
 

@@ -73,7 +73,9 @@
                 <div class="canvas-hint" id="canvas-hint">
                     <span>💡 Combine keywords to discover UTM courses</span>
                     <span>•</span>
-                    <span>Double-click to clone</span>
+                    <span>Double-click to duplicate</span>
+                    <span>•</span>
+                    <span>Right-click for <strong>course info</strong></span>
                     <span>•</span>
                     <span>Drop on <span class="kbd">🗑️ Trash</span> to delete</span>
                 </div>
@@ -118,15 +120,46 @@
 
                 <!-- Sidebar Footer -->
                 <div class="sidebar-footer">
-                    <span id="footer-count-text">6 items unlocked</span>
-                    <select id="sort-select" class="sort-select">
-                        <option value="recent">Sort: Newest</option>
-                        <option value="alpha">Sort: A - Z</option>
-                        <option value="category">Sort: Department</option>
-                    </select>
+                    <!-- Custom Keyword Panel -->
+                    <div class="custom-keyword-panel">
+                        <div class="custom-kw-label">🔮 Add custom keyword</div>
+                        <div class="custom-kw-row">
+                            <input type="text" id="custom-keyword-input" class="custom-kw-input" placeholder="e.g. Robotics, Ecology..." maxlength="32" autocomplete="off" spellcheck="false">
+                            <button id="custom-keyword-btn" class="custom-kw-btn" title="Add this keyword to your collection">+</button>
+                        </div>
+                    </div>
+                    <div class="sidebar-footer-bar">
+                        <span id="footer-count-text">6 items unlocked</span>
+                        <select id="sort-select" class="sort-select">
+                            <option value="recent">Sort: Newest</option>
+                            <option value="alpha">Sort: A - Z</option>
+                            <option value="category">Sort: Department</option>
+                        </select>
+                    </div>
                 </div>
             </aside>
         </main>
+    </div>
+
+    <!-- Description Popup (right-click on canvas card) -->
+    <div id="desc-popup" class="desc-popup" style="display:none;">
+        <div class="desc-popup-header">
+            <span id="desc-popup-emoji" class="desc-popup-emoji">📜</span>
+            <div class="desc-popup-title-wrap">
+                <div id="desc-popup-title" class="desc-popup-title">Course Name</div>
+                <div class="desc-popup-subtitle">
+                    <span id="desc-popup-code" class="desc-popup-code"></span>
+                    <span id="desc-popup-cat" class="desc-popup-cat-tag">Category</span>
+                </div>
+            </div>
+            <button id="desc-popup-close" class="desc-popup-close" title="Close">✕</button>
+        </div>
+        <div id="desc-popup-dept" class="desc-popup-dept"></div>
+        <div id="desc-popup-desc" class="desc-popup-desc"></div>
+        <div id="desc-popup-meta" class="desc-popup-meta"></div>
+        <div class="desc-popup-footer">
+            <button id="desc-popup-delete" class="desc-popup-btn danger">🗑️ Remove from Canvas</button>
+        </div>
     </div>
 
     <!-- Toast Notifications Container -->
