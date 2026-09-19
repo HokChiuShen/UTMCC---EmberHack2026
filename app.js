@@ -40,8 +40,16 @@ class UTMCraftGame {
         this.craftCandidate = null;
         this.nextInstanceId = 1;
 
+        // Canvas View State
+        this.zoom = 1;
+        this.panX = 0;
+        this.panY = 0;
+        this.isPanningCanvas = false;
+        this.panStart = { x: 0, y: 0 };
+
         // DOM Elements
         this.canvasArea = document.getElementById('canvas-area');
+        this.canvasContainer = document.getElementById('canvas-container');
         this.fxCanvas = document.getElementById('fx-canvas');
         this.canvasEmptyState = document.getElementById('canvas-empty-state');
         this.elementsGrid = document.getElementById('elements-grid');
@@ -247,9 +255,9 @@ class UTMCraftGame {
                     const dist = Math.hypot(moveEv.clientX - startX, moveEv.clientY - startY);
                     if (!isDragging && dist > 5) {
                         isDragging = true;
-                        const canvasRect = this.canvasArea.getBoundingClientRect();
-                        const x = moveEv.clientX - canvasRect.left - 50;
-                        const y = moveEv.clientY - canvasRect.top - 20;
+                        const containerRect = this.canvasContainer.getBoundingClientRect();
+                        const x = (moveEv.clientX - containerRect.left) / this.zoom - 50;
+                        const y = (moveEv.clientY - containerRect.top) / this.zoom - 20;
                         cardInstance = this.createCanvasCard(elem, x, y, false);
                         this.startDraggingCard(cardInstance, moveEv, 50, 20);
                         cleanup();
@@ -261,8 +269,8 @@ class UTMCraftGame {
                     if (!isDragging) {
                         // Clean Click / Tap: spawn 1 card on canvas near center
                         const rect = this.canvasArea.getBoundingClientRect();
-                        const spawnX = rect.width / 2 + (Math.random() - 0.5) * 200;
-                        const spawnY = rect.height / 2 + (Math.random() - 0.5) * 160;
+                        const spawnX = (rect.width / 2 + (Math.random() - 0.5) * 200 - this.panX) / this.zoom;
+                        const spawnY = (rect.height / 2 + (Math.random() - 0.5) * 160 - this.panY) / this.zoom;
                         this.createCanvasCard(elem, spawnX, spawnY);
                         sounds.playPop(520);
                     }
@@ -279,6 +287,13 @@ class UTMCraftGame {
                 window.addEventListener('pointercancel', cleanup);
             });
 
+            // Double-click on sidebar card shows description popup
+            card.addEventListener('dblclick', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.showDescPopup({ elemData: elem, el: null }, e.clientX, e.clientY);
+            });
+
             this.elementsGrid.appendChild(card);
         });
 
@@ -286,47 +301,36 @@ class UTMCraftGame {
         this.footerCountText.textContent = `${this.discovered.size} UTM courses & keywords`;
     }
 
-    createCanvasCard(elemData, x, y, playEffect = true) {
-        const instanceId = 'inst-' + (this.nextInstanceId++);
+    createCanvasCard(elem, x, y, playEffect = true) {
+        const instanceId = this.nextInstanceId++;
         const cardEl = document.createElement('div');
-        cardEl.className = 'element-card canvas-card';
+        cardEl.className = 'canvas-card';
         cardEl.dataset.instanceId = instanceId;
-        cardEl.dataset.id = elemData.id;
-        cardEl.dataset.cat = elemData.category || 'starter';
-        cardEl.title = `${elemData.name}\n${elemData.desc || ''}\n(Double click to duplicate, right click to delete)`;
-
-        // Clamp inside canvas bounds
-        const canvasRect = this.canvasArea.getBoundingClientRect();
-        const clampedX = Math.max(10, Math.min(x, canvasRect.width - 160));
-        const clampedY = Math.max(10, Math.min(y, canvasRect.height - 60));
-
-        cardEl.style.left = `${clampedX}px`;
-        cardEl.style.top = `${clampedY}px`;
+        cardEl.dataset.id = elem.id;
+        cardEl.dataset.cat = elem.category || 'starter';
 
         cardEl.innerHTML = `
-            <span class="elem-emoji">${elemData.emoji}</span>
-            <span class="elem-name">${elemData.name}</span>
+            <span class="card-emoji">${elem.emoji}</span>
+            <span class="card-name">${elem.name}</span>
+            ${elem.code ? `<span class="card-code">${elem.code}</span>` : ''}
         `;
+
+        // No longer clamped to viewport; infinite canvas
+        cardEl.style.left = `${x}px`;
+        cardEl.style.top = `${y}px`;
 
         const cardObj = {
             instanceId,
-            id: elemData.id,
-            elemData,
+            elemData: elem,
             el: cardEl,
-            x: clampedX,
-            y: clampedY
+            x: x,
+            y: y
         };
 
-        // Pointer down to drag
+        // Pointer Events for Smooth Dragging
         cardEl.addEventListener('pointerdown', (e) => {
-            if (e.button === 0) { // Left click
-                e.preventDefault();
-                e.stopPropagation();
-                const cardRect = cardEl.getBoundingClientRect();
-                const offsetX = e.clientX - cardRect.left;
-                const offsetY = e.clientY - cardRect.top;
-                this.startDraggingCard(cardObj, e, offsetX, offsetY);
-            }
+            if (e.button !== 0) return;
+            this.startDraggingCard(cardObj, e);
         });
 
         // Double-click detection using click counter (avoids dblclick swallowing)
@@ -340,23 +344,32 @@ class UTMCraftGame {
             } else if (clickCount >= 2) {
                 clearTimeout(clickTimer);
                 clickCount = 0;
-                this.duplicateCard(cardObj);
+                this.showDescPopup(cardObj, e.clientX, e.clientY);
             }
         });
 
-        // Right click to show description popup (replaces delete)
+        // Native dblclick event for immediate response
+        cardEl.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.showDescPopup(cardObj, e.clientX, e.clientY);
+        });
+
+        // Right click also shows description popup
         cardEl.addEventListener('contextmenu', (e) => {
             e.preventDefault();
             e.stopPropagation();
             this.showDescPopup(cardObj, e.clientX, e.clientY);
         });
 
-        this.canvasArea.appendChild(cardEl);
+        this.canvasContainer.appendChild(cardEl);
         this.canvasCards.push(cardObj);
         this.updateCanvasCardCount();
 
         if (playEffect) {
-            fx.burst(clampedX + 60, clampedY + 20, false);
+            const burstX = (x + 60) * this.zoom + this.panX;
+            const burstY = (y + 20) * this.zoom + this.panY;
+            fx.burst(burstX, burstY, false);
         }
 
         return cardObj;
@@ -391,13 +404,52 @@ class UTMCraftGame {
             : '';
         const fullDesc = enriched?.description || elem.desc || 'A UTM course.';
 
+        const calendarLinkText = elem.code
+            ? `<div class="popup-meta-row" style="margin-top: 8px;"><a href="https://utm.calendar.utoronto.ca/course-search" target="_blank" rel="noopener noreferrer" class="popup-calendar-btn">View on Official UTM Academic Calendar ↗</a></div>`
+            : '';
+
         document.getElementById('desc-popup-emoji').textContent = elem.emoji || '📜';
         document.getElementById('desc-popup-title').textContent = elem.name || 'UTM Course';
         document.getElementById('desc-popup-code').textContent = elem.code || '';
         document.getElementById('desc-popup-cat').textContent = catLabel;
         document.getElementById('desc-popup-dept').innerHTML = deptText + (elem.department ? `<span class="popup-dept-text">${elem.department}</span>` : '');
         document.getElementById('desc-popup-desc').textContent = fullDesc;
-        document.getElementById('desc-popup-meta').innerHTML = prereqText + hoursText + distText + modeText;
+        document.getElementById('desc-popup-meta').innerHTML = prereqText + hoursText + distText + modeText + calendarLinkText;
+
+        // Render Recipe Graph
+        const graphContainer = document.getElementById('desc-popup-graph');
+        if (graphContainer) {
+            graphContainer.innerHTML = '';
+            const craftRecipes = [];
+            this.recipesFound.forEach((resId, pairKey) => {
+                if (resId === elem.id) {
+                    const [idA, idB] = pairKey.split('___');
+                    const itemA = this.discovered.get(idA) || CURATED_ELEMENTS[idA];
+                    const itemB = this.discovered.get(idB) || CURATED_ELEMENTS[idB];
+                    if (itemA && itemB) {
+                        craftRecipes.push(`
+                            <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                                <div class="recipe-node"><span>${itemA.emoji}</span> <span>${itemA.name}</span></div>
+                                <span class="recipe-operator">+</span>
+                                <div class="recipe-node"><span>${itemB.emoji}</span> <span>${itemB.name}</span></div>
+                            </div>
+                        `);
+                    }
+                }
+            });
+
+            if (craftRecipes.length > 0) {
+                graphContainer.style.display = 'flex';
+                graphContainer.innerHTML = `<div class="desc-popup-graph-title">Recipe</div>` + craftRecipes.join('<div style="text-align:center; color: var(--text-muted); font-size: 10px; margin: 2px 0;">OR</div>');
+            } else {
+                graphContainer.style.display = 'flex';
+                graphContainer.innerHTML = `<div class="desc-popup-graph-title">Recipe</div><div style="font-style: italic; color: var(--text-muted); text-align: center;">Created customly</div>`;
+            }
+        }
+
+        if (this.descPopupDelete) {
+            this.descPopupDelete.style.display = cardObj.el ? 'inline-flex' : 'none';
+        }
 
         // Position popup near click
         const popup = this.descPopup;
@@ -406,13 +458,14 @@ class UTMCraftGame {
 
         // Wait one frame then position to avoid stale rect
         requestAnimationFrame(() => {
-            const pw = popup.offsetWidth;
-            const ph = popup.offsetHeight;
+            const pw = popup.offsetWidth || 340;
+            const ph = popup.offsetHeight || 280;
             let px = clientX + 12;
             let py = clientY - 12;
             if (px + pw > window.innerWidth - 10) px = clientX - pw - 12;
             if (py + ph > window.innerHeight - 10) py = window.innerHeight - ph - 10;
             if (py < 10) py = 10;
+            if (px < 10) px = 10;
             popup.style.left = `${px}px`;
             popup.style.top = `${py}px`;
         });
@@ -465,31 +518,47 @@ class UTMCraftGame {
 
     startDraggingCard(cardObj, e, offsetX, offsetY) {
         this.draggingCard = cardObj;
+        
+        if (offsetX === undefined || offsetY === undefined) {
+            const containerRect = this.canvasContainer.getBoundingClientRect();
+            const mouseX = (e.clientX - containerRect.left) / this.zoom;
+            const mouseY = (e.clientY - containerRect.top) / this.zoom;
+            offsetX = mouseX - cardObj.x;
+            offsetY = mouseY - cardObj.y;
+        }
+        
         this.dragOffset = { x: offsetX, y: offsetY };
         cardObj.el.classList.add('dragging');
         sounds.playPop(440);
 
         // Bring to front
-        this.canvasArea.appendChild(cardObj.el);
+        this.canvasContainer.appendChild(cardObj.el);
     }
 
     handlePointerMove(e) {
+        if (this.isPanningCanvas) {
+            this.panX += e.movementX;
+            this.panY += e.movementY;
+            this.updateCanvasTransform();
+            return;
+        }
+
         if (!this.draggingCard) return;
 
-        const canvasRect = this.canvasArea.getBoundingClientRect();
-        let curX = e.clientX - canvasRect.left - this.dragOffset.x;
-        let curY = e.clientY - canvasRect.top - this.dragOffset.y;
+        const containerRect = this.canvasContainer.getBoundingClientRect();
+        const mouseX = (e.clientX - containerRect.left) / this.zoom;
+        const mouseY = (e.clientY - containerRect.top) / this.zoom;
 
-        // Keep inside canvas boundary
-        curX = Math.max(0, Math.min(curX, canvasRect.width - 120));
-        curY = Math.max(0, Math.min(curY, canvasRect.height - 48));
+        let curX = mouseX - this.dragOffset.x;
+        let curY = mouseY - this.dragOffset.y;
 
+        // No strict clamped boundaries so you can drag into the infinite canvas space
         this.draggingCard.x = curX;
         this.draggingCard.y = curY;
         this.draggingCard.el.style.left = `${curX}px`;
         this.draggingCard.el.style.top = `${curY}px`;
 
-        // Check hover over Trash Zone
+        // Check hover over Trash Zone (Trash is fixed to viewport, so use e.clientX/Y)
         const trashRect = this.trashDropzone.getBoundingClientRect();
         const isOverTrash = (
             e.clientX >= trashRect.left &&
@@ -542,6 +611,12 @@ class UTMCraftGame {
     }
 
     async handlePointerUp(e) {
+        if (this.isPanningCanvas) {
+            this.isPanningCanvas = false;
+            this.canvasArea.style.cursor = 'crosshair';
+            return;
+        }
+
         if (!this.draggingCard) return;
 
         const card = this.draggingCard;
@@ -664,7 +739,7 @@ class UTMCraftGame {
 
             // Celebration sound & particles
             sounds.playDiscovery();
-            fx.burst(spawnX + 60, spawnY + 22, true);
+            fx.burst((spawnX + 60) * this.zoom + this.panX, (spawnY + 22) * this.zoom + this.panY, true);
 
             // Toast notification
             this.showDiscoveryToast(resultElem);
@@ -676,7 +751,7 @@ class UTMCraftGame {
         } else {
             this.recipesFound.set(pairKey, resultElem.id);
             sounds.playCraft();
-            fx.burst(spawnX + 60, spawnY + 22, false);
+            fx.burst((spawnX + 60) * this.zoom + this.panX, (spawnY + 22) * this.zoom + this.panY, false);
         }
 
         // Spawn result card on canvas
@@ -817,10 +892,47 @@ class UTMCraftGame {
         }
     }
 
+    updateCanvasTransform() {
+        this.canvasContainer.style.transform = `translate(${this.panX}px, ${this.panY}px) scale(${this.zoom})`;
+    }
+
     bindEvents() {
         // Pointer events for canvas dragging & dropping
         window.addEventListener('pointermove', (e) => this.handlePointerMove(e));
         window.addEventListener('pointerup', (e) => this.handlePointerUp(e));
+
+        this.canvasArea.addEventListener('pointerdown', (e) => {
+            if (!e.target.closest('.canvas-card') && !e.target.closest('.trash-dropzone') && !e.target.closest('.clear-canvas-btn')) {
+                this.isPanningCanvas = true;
+                this.canvasArea.style.cursor = 'grabbing';
+            }
+        });
+
+        this.canvasArea.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            
+            if (e.ctrlKey || e.metaKey) {
+                // Zoom (Pinch or Ctrl+Scroll)
+                // Use a smaller delta multiplier for smoother pinch-to-zoom on trackpads
+                const zoomFactor = Math.exp(-e.deltaY * 0.01);
+                const newZoom = Math.min(Math.max(this.zoom * zoomFactor, 0.15), 4);
+                
+                // Adjust pan to zoom towards mouse cursor
+                const rect = this.canvasArea.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+                
+                this.panX = mouseX - (mouseX - this.panX) * (newZoom / this.zoom);
+                this.panY = mouseY - (mouseY - this.panY) * (newZoom / this.zoom);
+                this.zoom = newZoom;
+            } else {
+                // Pan (Scroll)
+                this.panX -= e.deltaX;
+                this.panY -= e.deltaY;
+            }
+            
+            this.updateCanvasTransform();
+        }, { passive: false });
 
         // Search bar
         this.searchInput.addEventListener('input', (e) => {
